@@ -5,9 +5,10 @@ public class WeaponManager : MonoBehaviour
 {
     AnimationManager animationManager;
     CombatManager combatManager;
+    EnemyDamageDealer damageDealer;
 
     [Header("Combat Variables")]
-    private bool canDrawWeapon = true;
+    [SerializeField] private bool canDrawWeapon = true;
 
     Animator animator;
 
@@ -24,6 +25,7 @@ public class WeaponManager : MonoBehaviour
     {
         animationManager = GetComponentInParent<AnimationManager>();
         combatManager = GetComponentInParent<CombatManager>();
+        damageDealer = GetComponentInChildren<EnemyDamageDealer>();
 
         animator = GetComponent<Animator>();
     }
@@ -85,6 +87,16 @@ public class WeaponManager : MonoBehaviour
     public void OnWeaponSheath()
     {
         HandleWeaponParent(weaponSheathTransform, weaponTransform);
+    }
+
+    public void OnStartDealingDamage()
+    {
+        damageDealer.StartDealingDamage();
+    }
+
+    public void OnEndDealingDamage()
+    {
+        damageDealer.EndDealingDamage();
     }
     #endregion
 }

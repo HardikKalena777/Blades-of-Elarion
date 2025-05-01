@@ -48571,7 +48571,7 @@ Camera:
   m_ShutterSpeed: 0.005
   m_Aperture: 16
   m_FocusDistance: 10
-  m_FocalLength: 13.858139
+  m_FocalLength: 21.982569
   m_BladeCount: 5
   m_Curvature: {x: 2, y: 11}
   m_BarrelClipping: 0.25
@@ -48584,11 +48584,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1700
-  field of view: 60.000004
+  near clip plane: 0.2
+  far clip plane: 500
+  field of view: 40
   orthographic: 0
-  orthographic size: 5
+  orthographic size: 10
   m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
@@ -48612,8 +48612,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1922094174}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.18910755, y: -0.000000029264587, z: 0.0000000056358456, w: 0.9819564}
-  m_LocalPosition: {x: -734.2245, y: -3.217022, z: -262.79996}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -735.3346, y: -5.0972247, z: -272.14432}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -48927,6 +48927,67 @@ Terrain:
   m_EnableHeightmapRayTracing: 1
   m_EnableTreesAndDetailsRayTracing: 0
   m_TreeMotionVectorModeOverride: 3
+--- !u!1001 &2057747727
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2197730188765279427, guid: df1f3f34033f16a48b56b3f30bb89eab, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -735.5346
+      objectReference: {fileID: 0}
+    - target: {fileID: 2197730188765279427, guid: df1f3f34033f16a48b56b3f30bb89eab, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -6.4722247
+      objectReference: {fileID: 0}
+    - target: {fileID: 2197730188765279427, guid: df1f3f34033f16a48b56b3f30bb89eab, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -268.14432
+      objectReference: {fileID: 0}
+    - target: {fileID: 2197730188765279427, guid: df1f3f34033f16a48b56b3f30bb89eab, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2197730188765279427, guid: df1f3f34033f16a48b56b3f30bb89eab, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2197730188765279427, guid: df1f3f34033f16a48b56b3f30bb89eab, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2197730188765279427, guid: df1f3f34033f16a48b56b3f30bb89eab, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2197730188765279427, guid: df1f3f34033f16a48b56b3f30bb89eab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2197730188765279427, guid: df1f3f34033f16a48b56b3f30bb89eab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2197730188765279427, guid: df1f3f34033f16a48b56b3f30bb89eab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3796873992048776700, guid: df1f3f34033f16a48b56b3f30bb89eab, type: 3}
+      propertyPath: m_Name
+      value: SwordsMan
+      objectReference: {fileID: 0}
+    - target: {fileID: 5240319376611373224, guid: df1f3f34033f16a48b56b3f30bb89eab, type: 3}
+      propertyPath: GroundLayers.m_Bits
+      value: 9
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: df1f3f34033f16a48b56b3f30bb89eab, type: 3}
 --- !u!1 &2058048510
 GameObject:
   m_ObjectHideFlags: 0
@@ -49010,6 +49071,10 @@ PrefabInstance:
     - target: {fileID: 6825097452884004929, guid: b9eeba0bea7807e45b7826724da4c8d1, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6825097452884004929, guid: b9eeba0bea7807e45b7826724da4c8d1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7081165924923435628, guid: b9eeba0bea7807e45b7826724da4c8d1, type: 3}
       propertyPath: allowJog
@@ -56081,3 +56146,4 @@ SceneRoots:
   - {fileID: 2102009159}
   - {fileID: 197224676}
   - {fileID: 2077009440}
+  - {fileID: 2057747727}

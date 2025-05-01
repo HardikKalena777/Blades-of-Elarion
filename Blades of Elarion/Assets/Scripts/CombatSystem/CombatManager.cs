@@ -35,26 +35,19 @@ public class CombatManager : MonoBehaviour
 
     private void Update()
     {
-        if (comboCounter > 0)
-        {
-            comboText.text = comboCounter + "X";
-        }
-        else
-        {
-            comboText.text = "";
-        }
+        HandleComboUI(comboText);
         ExitAttack();
     }
 
     public void LightAttack()
     {
-        HandleCombatState(State.Attack);
+        HandleCombatState(State.LightAttack);
         Attack(lightCombo);
     }
 
     public void HeavyAttack()
     {
-        HandleCombatState(State.Attack);
+        HandleCombatState(State.HeavyAttack);
         Attack(heavyCombo);
     }
 
@@ -62,24 +55,24 @@ public class CombatManager : MonoBehaviour
     {
         if (currentState == State.Base)
             return;
-            onAttackStart?.Invoke();
-            if (Time.time - lastComboEnd > comboDelay && comboCounter <= combo.Count)
+        onAttackStart?.Invoke();
+        if (Time.time - lastComboEnd > comboDelay && comboCounter <= combo.Count)
+        {
+            CancelInvoke(nameof(EndCombo));
+
+            if (Time.time - lastClickedTime >= attackDelay)
             {
-                CancelInvoke(nameof(EndCombo));
+                animator.runtimeAnimatorController = combo[comboCounter].animatorOV;
+                animator.Play("Attack", combatLayer, 0f);
+                comboCounter++;
+                lastClickedTime = Time.time;
 
-                if(Time.time - lastClickedTime >= attackDelay)
+                if (comboCounter >= combo.Count)
                 {
-                    animator.runtimeAnimatorController = combo[comboCounter].animatorOV;
-                    animator.Play("Attack", combatLayer, 0f);
-                    comboCounter++;
-                    lastClickedTime = Time.time;
-
-                    if(comboCounter >= combo.Count)
-                    {
-                        comboCounter = 0;
-                    }
+                    comboCounter = 0;
                 }
             }
+        }
     }
 
     void HandleCombatState(State state)
@@ -91,9 +84,10 @@ public class CombatManager : MonoBehaviour
 
     void ExitAttack()
     {
-        if(animator.GetCurrentAnimatorStateInfo(combatLayer).normalizedTime > 0.9f && animator.GetCurrentAnimatorStateInfo(combatLayer).IsTag("Attack"))
+        if (animator.GetCurrentAnimatorStateInfo(combatLayer).normalizedTime > 0.9f && animator.GetCurrentAnimatorStateInfo(combatLayer).IsTag("Attack"))
         {
             Invoke(nameof(EndCombo), 1f);
+            onAttackEnd?.Invoke();
         }
     }
 
@@ -102,14 +96,28 @@ public class CombatManager : MonoBehaviour
         comboCounter = 0;
         lastComboEnd = Time.time;
         HandleCombatState(State.Combat);
-        onAttackEnd?.Invoke();
     }
 
-}
+    void HandleComboUI(TMP_Text comboText)
+    {
+        if (comboText == null)
+            return;
+        if (comboCounter > 0)
+        {
+            comboText.text = comboCounter.ToString() + "X";
+        }
+        else
+        {
+            comboText.text = "";
+        }
 
+    }
+}
 public enum State
 {
     Base,
     Combat,
-    Attack,
+    LightAttack,
+    HeavyAttack,
 }
+
