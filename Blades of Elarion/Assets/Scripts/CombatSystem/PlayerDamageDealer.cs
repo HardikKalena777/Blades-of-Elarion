@@ -3,10 +3,11 @@ using UnityEngine;
 
 public class PlayerDamageDealer : MonoBehaviour
 {
-    public int damage;
+    public WeaponSO weaponData;
     public float weaponLength;
-    public LayerMask enemyLayer;
 
+    LayerMask enemyLayer;
+    int damage;
     bool hasDealtDamage;
     bool canDealDamage;
 
@@ -15,6 +16,8 @@ public class PlayerDamageDealer : MonoBehaviour
     {
         canDealDamage = false;
         hasDealtDamage = false;
+        damage = weaponData.lightDamage;
+        enemyLayer = weaponData.enemyLayer;
     }
 
     private void Update()

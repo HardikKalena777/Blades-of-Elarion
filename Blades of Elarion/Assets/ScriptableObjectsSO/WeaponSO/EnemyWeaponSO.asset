@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: EnemyWeaponSO
   m_EditorClassIdentifier: 
   weaponLength: 1
-  lightDamage: 5
-  heavyDamage: 10
+  lightDamage: 50
+  heavyDamage: 50
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128

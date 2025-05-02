@@ -11,6 +11,7 @@ public class EnemyAI : MonoBehaviour
     public float attackRange;
     public float followRange;
     public GameObject hitVFX;
+    public GameObject ragdoll;
 
     GameObject player;
     Animator animator;
@@ -21,11 +22,8 @@ public class EnemyAI : MonoBehaviour
 
     [Header("Combat")]
     float attackCooldown;
-    float attackDamage;
     float newDestinationCooldown;
     float timePassed;
-
-    PlayerDamageDealer damageDealer;
 
     private void Awake()
     {
@@ -36,7 +34,6 @@ public class EnemyAI : MonoBehaviour
         maxHealth = enemyData.maxHealth;
         currentHealth = maxHealth;
         attackCooldown = enemyData.attackCooldown;
-        attackDamage = enemyData.attackDamage;
         newDestinationCooldown = enemyData.newDestinationCooldown;
     }
 
@@ -47,6 +44,8 @@ public class EnemyAI : MonoBehaviour
 
     public void AIBehaviour()
     {
+        if (player == null)
+            return;
         animator.SetFloat("speed", agent.velocity.magnitude / agent.speed);
 
         if (timePassed >= attackCooldown)
@@ -73,6 +72,7 @@ public class EnemyAI : MonoBehaviour
         currentHealth -= damage;
 
         animator.SetTrigger("Hit");
+        CameraShake.Instance.ShakeCamera(1f, 0.2f);
 
         HapticRumble.HR_Instance.Rumble(0.5f, 0.5f, 0.2f); // Trigger haptic feedback on hit
 
@@ -84,6 +84,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Die()
     {
+        Instantiate(ragdoll, transform.position, transform.rotation);
         Destroy(this.gameObject);
     }
 
@@ -107,7 +108,7 @@ public class EnemyAI : MonoBehaviour
         if (hitVFX != null)
         {
             GameObject vfx = Instantiate(hitVFX, hitPosition, Quaternion.identity);
-            Destroy(vfx, 3f); // Destroy the VFX after 2 seconds
+            Destroy(vfx, 1f); // Destroy the VFX after 2 seconds
         }
     }
 

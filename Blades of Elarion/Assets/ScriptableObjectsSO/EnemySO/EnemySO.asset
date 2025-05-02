@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: EnemySO
   m_EditorClassIdentifier: 
   maxHealth: 100
-  attackRange: 2
-  followRange: 10
   attackCooldown: 3
-  attackDamage: 30
+  attackDamage: 5
   newDestinationCooldown: 0.5

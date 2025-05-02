@@ -5,6 +5,7 @@ public class HealthSystem : MonoBehaviour
 {
     public int currentHealth;
     public GameObject hitVFX;
+    public GameObject ragdoll;
 
     int maxHealth = 100;
     Animator animator;
@@ -23,6 +24,7 @@ public class HealthSystem : MonoBehaviour
         currentHealth -= damage;
 
         animator.SetTrigger("Hit");
+        CameraShake.Instance.ShakeCamera(1f, 0.2f);
 
         if (currentHealth <= 0)
         {
@@ -32,6 +34,7 @@ public class HealthSystem : MonoBehaviour
 
     private void Die()
     {
+        Instantiate(ragdoll, transform.position, transform.rotation);
         Destroy(gameObject);
     }
 
@@ -40,7 +43,7 @@ public class HealthSystem : MonoBehaviour
         if (hitVFX != null)
         {
             GameObject vfx = Instantiate(hitVFX, hitPosition, Quaternion.identity);
-            Destroy(vfx, 3f); // Destroy the VFX after 2 seconds
+            Destroy(vfx, 1f); // Destroy the VFX after 2 seconds
         }
     }
 }

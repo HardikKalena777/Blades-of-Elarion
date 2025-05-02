@@ -4304,6 +4304,8 @@ MonoBehaviour:
   - Attack3
   attackRange: 1.5
   followRange: 10
+  hitVFX: {fileID: 1000013355911406, guid: d32aa916f50cac94db11e6f19821a58f, type: 3}
+  ragdoll: {fileID: 7609816584872454532, guid: 9c917a37eadc9e843ac67e4b87998659, type: 3}
   currentHealth: 0
 --- !u!1 &4808773997583149512
 GameObject:
@@ -6329,7 +6331,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8492591295219360474, guid: 43cee827c4ba5114481fed54b1d72bea, type: 3}
       propertyPath: m_Name
-      value: WEAPON 1
+      value: ENEMYWEAPON
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
