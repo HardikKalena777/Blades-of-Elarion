@@ -55,14 +55,14 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.17231223
+      - time: 0.08342333
         functionName: OnStartDealingDamage
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.33431518
+      - time: 0.9181536
         functionName: OnEndDealingDamage
         data: 
         objectReferenceParameter: {instanceID: 0}

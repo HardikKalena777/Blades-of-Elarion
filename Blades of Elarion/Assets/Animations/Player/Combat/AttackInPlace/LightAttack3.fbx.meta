@@ -35,7 +35,7 @@ ModelImporter:
       takeName: OneHand_Up_Attack_3_InPlace
       internalID: -7470489156361778335
       firstFrame: 0
-      lastFrame: 60
+      lastFrame: 40
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -55,14 +55,14 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.101620056
+      - time: 0.08333333
         functionName: OnStartDealingDamage
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.40795293
+      - time: 1
         functionName: OnEndDealingDamage
         data: 
         objectReferenceParameter: {instanceID: 0}

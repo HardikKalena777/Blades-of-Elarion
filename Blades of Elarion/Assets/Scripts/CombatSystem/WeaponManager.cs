@@ -50,7 +50,6 @@ public class WeaponManager : MonoBehaviour
             onSheathWeapon?.Invoke();
             animator.SetTrigger("Sheath");
             PlayTargetAnimation("Locomotion", 0.1f);
-            combatManager.currentState = State.Base;
         }
     }
 
@@ -61,7 +60,6 @@ public class WeaponManager : MonoBehaviour
             canDrawWeapon = false;
             onDrawWeapon?.Invoke();
             animator.SetTrigger("Draw");
-            combatManager.currentState = State.Combat;
         }
     }
 

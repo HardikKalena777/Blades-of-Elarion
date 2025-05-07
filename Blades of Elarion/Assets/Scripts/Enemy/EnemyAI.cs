@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class EnemyAI : MonoBehaviour
 {
+    public bool IsAlive;
     public EnemySO enemyData;
     public string[] attackAnimations;
     public float attackRange;
     public float followRange;
     public GameObject hitVFX;
     public GameObject ragdoll;
+    public Slider healthBar;
 
     GameObject player;
     Animator animator;
@@ -39,7 +42,10 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
-        AIBehaviour();
+        if(IsAlive)
+        {
+            AIBehaviour();
+        }
     }
 
     public void AIBehaviour()
@@ -71,6 +77,7 @@ public class EnemyAI : MonoBehaviour
     {
         currentHealth -= damage;
 
+        UpdateHealthUI(currentHealth,healthBar);
         animator.SetTrigger("Hit");
         CameraShake.Instance.ShakeCamera(1f, 0.2f);
 
@@ -109,6 +116,14 @@ public class EnemyAI : MonoBehaviour
         {
             GameObject vfx = Instantiate(hitVFX, hitPosition, Quaternion.identity);
             Destroy(vfx, 1f); // Destroy the VFX after 2 seconds
+        }
+    }
+
+    private void UpdateHealthUI(int health, Slider healthBar)
+    {
+        if (healthBar != null)
+        {
+            healthBar.value = (float)health / maxHealth; // Correctly update the health bar value as a percentage
         }
     }
 

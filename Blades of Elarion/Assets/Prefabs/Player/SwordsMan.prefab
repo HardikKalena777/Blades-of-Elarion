@@ -3066,6 +3066,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 561414977be75074a956ef3edc7e0275, type: 2}
   - {fileID: 11400000, guid: 6f16ecd8fcaa6fe48a126038b3804224, type: 2}
   - {fileID: 11400000, guid: 0cd18be7dd5bf2e46a38af6bdb0c9da0, type: 2}
+  meleeCombo: []
   comboText: {fileID: 0}
   combatLayer: 2
   comboDelay: 0.5
@@ -3114,6 +3115,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   hitVFX: {fileID: 1000013355911406, guid: d32aa916f50cac94db11e6f19821a58f, type: 3}
+  ragdoll: {fileID: 3251923512421446982, guid: 012b5ae2f5100bd4d9674469e08adeee, type: 3}
+  healthBar: {fileID: 0}
+  volume: {fileID: 0}
 --- !u!1 &3807984353831723055
 GameObject:
   m_ObjectHideFlags: 0

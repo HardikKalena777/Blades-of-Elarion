@@ -13,6 +13,7 @@ public class CombatManager : MonoBehaviour
 
     public List<AttackSO> lightCombo;
     public List<AttackSO> heavyCombo;
+    public List<AttackSO> meleeCombo;
     public TMP_Text comboText;
 
     [SerializeField] int combatLayer;
@@ -39,6 +40,12 @@ public class CombatManager : MonoBehaviour
         ExitAttack();
     }
 
+    public void MeleeAttack()
+    {
+        HandleCombatState(State.MeleeAttack);
+        Attack(meleeCombo);
+    }
+
     public void LightAttack()
     {
         HandleCombatState(State.LightAttack);
@@ -53,8 +60,6 @@ public class CombatManager : MonoBehaviour
 
     void Attack(List<AttackSO> combo)
     {
-        if (currentState == State.Base)
-            return;
         onAttackStart?.Invoke();
         if (Time.time - lastComboEnd > comboDelay && comboCounter <= combo.Count)
         {
@@ -63,7 +68,7 @@ public class CombatManager : MonoBehaviour
             if (Time.time - lastClickedTime >= attackDelay)
             {
                 animator.runtimeAnimatorController = combo[comboCounter].animatorOV;
-                animator.Play("Attack", combatLayer, 0f);
+                animator.Play("Attack", combatLayer, 0.07f);
                 comboCounter++;
                 lastClickedTime = Time.time;
 
@@ -77,8 +82,6 @@ public class CombatManager : MonoBehaviour
 
     void HandleCombatState(State state)
     {
-        if (currentState == State.Base)
-            return;
         currentState = state;
     }
 
@@ -115,8 +118,8 @@ public class CombatManager : MonoBehaviour
 }
 public enum State
 {
-    Base,
     Combat,
+    MeleeAttack,
     LightAttack,
     HeavyAttack,
 }

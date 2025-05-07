@@ -6,12 +6,12 @@ public class EnemyDamageDealer : MonoBehaviour
     public List<GameObject> hasDealtDamage;
     public WeaponSO weaponData;
 
-    float weaponLength;
-    int lightDamage;
-    int heavyDamage;
-    bool canDealDamage;
+    public float weaponLength;
+    public int lightDamage;
+    public int heavyDamage;
+    public bool canDealDamage;
 
-    LayerMask enemyLayer;
+    public LayerMask enemyLayer;
 
     CombatManager combatManager;
 
