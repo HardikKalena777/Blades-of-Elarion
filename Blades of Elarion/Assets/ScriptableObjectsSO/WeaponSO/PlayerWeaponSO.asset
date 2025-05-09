@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 127c53634ac20f340aeb848ecaab10cb, type: 3}
   m_Name: PlayerWeaponSO
   m_EditorClassIdentifier: 
-  weaponLength: 1.5
+  weaponLength: 1
   lightDamage: 30
   heavyDamage: 30
   enemyLayer:
