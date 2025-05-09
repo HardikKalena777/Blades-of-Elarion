@@ -2763,8 +2763,8 @@ GameObject:
   - component: {fileID: 3931615244564414578}
   - component: {fileID: 2008726148766306233}
   - component: {fileID: 8297165643468940114}
-  - component: {fileID: 4446105978829614806}
   - component: {fileID: 4438935376313028180}
+  - component: {fileID: 1694929255429192039}
   m_Layer: 7
   m_Name: SwordsMan
   m_TagString: Player
@@ -3041,66 +3041,6 @@ MonoBehaviour:
   onSheathWeapon:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &4446105978829614806
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3796873992048776700}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10652b6d5537be94199faf82d0cbc7a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentState: 0
-  lightCombo:
-  - {fileID: 11400000, guid: bdabccba3e9d440448fd5c96107986ec, type: 2}
-  - {fileID: 11400000, guid: 7e5870f7b722dac46903ca9148a2bac0, type: 2}
-  - {fileID: 11400000, guid: bdabccba3e9d440448fd5c96107986ec, type: 2}
-  - {fileID: 11400000, guid: 7e5870f7b722dac46903ca9148a2bac0, type: 2}
-  - {fileID: 11400000, guid: e9014b9ffa2898a4ebb5fa8d3ce6b9d8, type: 2}
-  heavyCombo:
-  - {fileID: 11400000, guid: 561414977be75074a956ef3edc7e0275, type: 2}
-  - {fileID: 11400000, guid: 6f16ecd8fcaa6fe48a126038b3804224, type: 2}
-  - {fileID: 11400000, guid: 561414977be75074a956ef3edc7e0275, type: 2}
-  - {fileID: 11400000, guid: 6f16ecd8fcaa6fe48a126038b3804224, type: 2}
-  - {fileID: 11400000, guid: 0cd18be7dd5bf2e46a38af6bdb0c9da0, type: 2}
-  meleeCombo: []
-  comboText: {fileID: 0}
-  combatLayer: 2
-  comboDelay: 0.5
-  attackDelay: 1
-  onAttackStart:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5240319376611373224}
-        m_TargetAssemblyTypeName: StarterAssets.ThirdPersonController, Assembly-CSharp
-        m_MethodName: DisableMovement
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onAttackEnd:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5240319376611373224}
-        m_TargetAssemblyTypeName: StarterAssets.ThirdPersonController, Assembly-CSharp
-        m_MethodName: EnableMovement
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &4438935376313028180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3118,6 +3058,20 @@ MonoBehaviour:
   ragdoll: {fileID: 3251923512421446982, guid: 012b5ae2f5100bd4d9674469e08adeee, type: 3}
   healthBar: {fileID: 0}
   volume: {fileID: 0}
+--- !u!114 &1694929255429192039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3796873992048776700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04f609fb2f129394bb52848cd35fa5fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 5776889859346832948}
+  comboDelay: 1.2
 --- !u!1 &3807984353831723055
 GameObject:
   m_ObjectHideFlags: 0

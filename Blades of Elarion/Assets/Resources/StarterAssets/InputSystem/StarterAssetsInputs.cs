@@ -8,7 +8,7 @@ namespace StarterAssets
 	public class StarterAssetsInputs : MonoBehaviour
 	{
 		WeaponManager weaponManager;
-        CombatManager combatManager;
+        ComboManager comboManager;
 
         [Header("Character Input Values")]
 		public Vector2 move;
@@ -30,7 +30,7 @@ namespace StarterAssets
         private void Awake()
         {
             weaponManager = GetComponent<WeaponManager>();
-            combatManager = GetComponent<CombatManager>();
+            comboManager = GetComponent<ComboManager>();
         }
 
 #if ENABLE_INPUT_SYSTEM
@@ -78,18 +78,14 @@ namespace StarterAssets
         public void OnLightAttack(InputValue value)
         {
             LightAttackInput(value.isPressed);
-            if (value.isPressed)
-            {
-                combatManager.LightAttack();
+			if(value.isPressed)
+			{
+				comboManager.Attack();
             }
         }
         public void OnHeavyAttack(InputValue value)
         {
             HeavyAttackInput(value.isPressed);
-            if (value.isPressed)
-            {
-                combatManager.HeavyAttack();
-            }
         }
 #endif
 

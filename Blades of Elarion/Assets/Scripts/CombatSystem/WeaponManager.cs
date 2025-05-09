@@ -4,11 +4,10 @@ using UnityEngine.Events;
 public class WeaponManager : MonoBehaviour
 {
     AnimationManager animationManager;
-    CombatManager combatManager;
     EnemyDamageDealer damageDealer;
 
     [Header("Combat Variables")]
-    [SerializeField] private bool canDrawWeapon = true;
+    public bool canDrawWeapon = true;
 
     Animator animator;
 
@@ -24,7 +23,6 @@ public class WeaponManager : MonoBehaviour
     private void Awake()
     {
         animationManager = GetComponentInParent<AnimationManager>();
-        combatManager = GetComponentInParent<CombatManager>();
         damageDealer = GetComponentInChildren<EnemyDamageDealer>();
 
         animator = GetComponent<Animator>();

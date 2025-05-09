@@ -605,17 +605,21 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 1078917895}
-    - target: {fileID: 4446105978829614806, guid: df1f3f34033f16a48b56b3f30bb89eab, type: 3}
-      propertyPath: comboText
-      value: 
-      objectReference: {fileID: 638110031646708421}
-    - target: {fileID: 4446105978829614806, guid: df1f3f34033f16a48b56b3f30bb89eab, type: 3}
-      propertyPath: onAttackEnd.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+    - target: {fileID: 5709831868025911512, guid: df1f3f34033f16a48b56b3f30bb89eab, type: 3}
+      propertyPath: heavyDamage
+      value: 30
       objectReference: {fileID: 0}
-    - target: {fileID: 4446105978829614806, guid: df1f3f34033f16a48b56b3f30bb89eab, type: 3}
-      propertyPath: onAttackStart.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+    - target: {fileID: 5709831868025911512, guid: df1f3f34033f16a48b56b3f30bb89eab, type: 3}
+      propertyPath: lightDamage
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 5709831868025911512, guid: df1f3f34033f16a48b56b3f30bb89eab, type: 3}
+      propertyPath: weaponLength
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5709831868025911512, guid: df1f3f34033f16a48b56b3f30bb89eab, type: 3}
+      propertyPath: enemyLayer.m_Bits
+      value: 64
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1065,17 +1069,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1efd3e2f6a420b24fb5df7ddff2796f4, type: 3}
---- !u!114 &638110031646708421 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8120354871905842699, guid: 1efd3e2f6a420b24fb5df7ddff2796f4, type: 3}
-  m_PrefabInstance: {fileID: 638110031646708420}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2164355092143559991
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1087,10 +1080,6 @@ PrefabInstance:
     - target: {fileID: 4746858642469833032, guid: 923ee8e1f3088464b9cecdd00a6714e5, type: 3}
       propertyPath: m_Name
       value: Enemy
-      objectReference: {fileID: 0}
-    - target: {fileID: 6052485056180048216, guid: 923ee8e1f3088464b9cecdd00a6714e5, type: 3}
-      propertyPath: IsAlive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6565781401725046492, guid: 923ee8e1f3088464b9cecdd00a6714e5, type: 3}
       propertyPath: m_LocalPosition.x

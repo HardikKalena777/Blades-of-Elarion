@@ -4,7 +4,6 @@ using UnityEngine;
 public class EnemyDamageDealer : MonoBehaviour
 {
     public List<GameObject> hasDealtDamage;
-    public WeaponSO weaponData;
 
     public float weaponLength;
     public int lightDamage;
@@ -17,12 +16,6 @@ public class EnemyDamageDealer : MonoBehaviour
 
     private void Awake()
     {
-        lightDamage = weaponData.lightDamage;
-        heavyDamage = weaponData.heavyDamage;
-        weaponLength = weaponData.weaponLength;
-
-        enemyLayer = weaponData.enemyLayer;
-
         combatManager = GetComponentInParent<CombatManager>();
     }
 
@@ -48,8 +41,8 @@ public class EnemyDamageDealer : MonoBehaviour
                 if (hit.transform.TryGetComponent<EnemyAI>(out EnemyAI enemy) && !hasDealtDamage.Contains(hit.transform.gameObject))
                 {
                     // Damage     
-                    int damage = combatManager.currentState == State.LightAttack ? lightDamage : (combatManager.currentState == State.HeavyAttack ? heavyDamage : 0);
-                    enemy.TakeDamage(damage);
+                    //int damage = combatManager.currentState == State.LightAttack ? lightDamage : (combatManager.currentState == State.HeavyAttack ? heavyDamage : 0);
+                    enemy.TakeDamage(lightDamage);
                     enemy.PlayHitVFX(hit.point);
                     hasDealtDamage.Add(hit.transform.gameObject);
                 }

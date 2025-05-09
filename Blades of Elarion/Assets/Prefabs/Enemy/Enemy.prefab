@@ -4297,7 +4297,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7101026eb788bc2428d41f44130cc74f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsAlive: 0
+  IsAlive: 1
   enemyData: {fileID: 11400000, guid: 993536e11889bbb41ae445c19aee77be, type: 2}
   attackAnimations:
   - Attack
