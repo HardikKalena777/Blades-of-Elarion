@@ -1,8 +1,10 @@
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.HighDefinition;
 using UnityEngine.UI;
 
 public class EnemyAI : MonoBehaviour
@@ -15,6 +17,7 @@ public class EnemyAI : MonoBehaviour
     public GameObject hitVFX;
     public GameObject ragdoll;
     public Slider healthBar;
+    public bool beingHit;
 
     GameObject player;
     Animator animator;
@@ -58,6 +61,8 @@ public class EnemyAI : MonoBehaviour
         {
             if (Vector3.Distance(player.transform.position, transform.position) <= attackRange)
             {
+                if (beingHit)
+                    return;
                 PlayTargetAnimation(attackAnimations[UnityEngine.Random.Range(0, attackAnimations.Length)], 0);
                 timePassed = 0;
             }
@@ -80,8 +85,9 @@ public class EnemyAI : MonoBehaviour
         UpdateHealthUI(currentHealth,healthBar);
         animator.SetTrigger("Hit");
         CameraShake.Instance.ShakeCamera(1f, 0.2f);
-
-        HapticRumble.HR_Instance.Rumble(0.5f, 0.5f, 0.2f); // Trigger haptic feedback on hit
+        HapticRumble.HR_Instance.Rumble(0.5f, 0.5f, 0.2f);
+        beingHit = true;
+        UniTask.WaitForSeconds(0.5f).ContinueWith(() => beingHit = false);
 
         if (currentHealth <= 0)
         {
@@ -108,6 +114,19 @@ public class EnemyAI : MonoBehaviour
     public void EndDealingDamage()
     {
         GetComponentInChildren<PlayerDamageDealer>().EndDealingDamage();
+    }
+
+    public void Blocked()
+    {
+        if(player.GetComponent<WeaponManager>().blocking)
+        {
+            Debug.Log("Blocked");
+            CameraShake.Instance.ShakeCamera(1f, 0.2f);
+        }
+        else
+        {
+            return;
+        }
     }
 
     public void PlayHitVFX(Vector3 hitPosition)

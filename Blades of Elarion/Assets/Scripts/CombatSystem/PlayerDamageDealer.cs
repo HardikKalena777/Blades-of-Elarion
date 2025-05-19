@@ -9,7 +9,7 @@ public class PlayerDamageDealer : MonoBehaviour
     LayerMask enemyLayer;
     int damage;
     bool hasDealtDamage;
-    bool canDealDamage;
+    public bool canDealDamage;
 
 
     private void Start()
@@ -33,6 +33,10 @@ public class PlayerDamageDealer : MonoBehaviour
 
             if (Physics.Raycast(transform.position, transform.forward, out hit, weaponLength, enemyLayer))
             {
+                if (hit.transform.CompareTag("Shield"))
+                {
+                    canDealDamage = false;
+                }
                 if (hit.transform.TryGetComponent<HealthSystem>(out HealthSystem playerHealth))
                 {
                     playerHealth.TakeDamage(damage);

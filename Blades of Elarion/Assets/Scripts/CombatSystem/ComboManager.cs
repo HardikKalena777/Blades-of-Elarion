@@ -1,10 +1,8 @@
-using StarterAssets;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class ComboManager : MonoBehaviour
 {
-    ThirdPersonController thirdPersonController;
     WeaponManager weaponManager;
 
     [SerializeField] private Animator animator;
@@ -15,7 +13,6 @@ public class ComboManager : MonoBehaviour
 
     private void Awake()
     {
-        thirdPersonController = GetComponent<ThirdPersonController>();
         weaponManager = GetComponent<WeaponManager>();
     }
     private void Update()
@@ -37,8 +34,14 @@ public class ComboManager : MonoBehaviour
 
         if(numberOfClicks >= 1)
         {
-            animator.SetTrigger("Attack1");
-            thirdPersonController.DisableMovement();
+            if(!weaponManager.canDrawWeapon)
+            {
+                animator.SetTrigger("Attack1");
+            }
+            if(weaponManager.canDrawWeapon)
+            {
+                animator.SetTrigger("Melee1");
+            }
         }
 
         numberOfClicks = Mathf.Clamp(numberOfClicks, 0, 3);
@@ -49,7 +52,6 @@ public class ComboManager : MonoBehaviour
         if (numberOfClicks >= 2)
         {
             animator.SetTrigger("Attack2");
-            thirdPersonController.DisableMovement();
         }
     }
     public void ComboAttack2Transition()
@@ -57,13 +59,11 @@ public class ComboManager : MonoBehaviour
         if (numberOfClicks >= 3)
         {
             animator.SetTrigger("Attack3");
-            thirdPersonController.DisableMovement();
         }
     }
 
     public void ResetAttackAnimation()
     {
-        thirdPersonController.EnableMovement();
 
         animator.ResetTrigger("Attack1");
         animator.ResetTrigger("Attack2");

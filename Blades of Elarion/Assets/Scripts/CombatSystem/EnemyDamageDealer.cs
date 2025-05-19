@@ -6,6 +6,7 @@ public class EnemyDamageDealer : MonoBehaviour
     public List<GameObject> hasDealtDamage;
 
     public float weaponLength;
+    public float weaponWidth;
     public int lightDamage;
     public int heavyDamage;
     public bool canDealDamage;
@@ -34,16 +35,18 @@ public class EnemyDamageDealer : MonoBehaviour
     {
         if (canDealDamage)
         {
-            RaycastHit hit;
+            Vector3 start = transform.position;
+            Vector3 end = transform.position + transform.forward * weaponLength;
+            float radius = weaponWidth;
 
-            if (Physics.Raycast(transform.position, transform.forward, out hit, weaponLength, enemyLayer))
+            RaycastHit[] hits = Physics.CapsuleCastAll(start, end, radius, transform.forward, 0f, enemyLayer);
+
+            foreach (var hit in hits)
             {
                 if (hit.transform.TryGetComponent<EnemyAI>(out EnemyAI enemy) && !hasDealtDamage.Contains(hit.transform.gameObject))
                 {
-                    // Damage     
-                    //int damage = combatManager.currentState == State.LightAttack ? lightDamage : (combatManager.currentState == State.HeavyAttack ? heavyDamage : 0);
                     enemy.TakeDamage(lightDamage);
-                    enemy.PlayHitVFX(hit.point);
+                    enemy.PlayHitVFX(start);
                     hasDealtDamage.Add(hit.transform.gameObject);
                 }
             }
@@ -62,8 +65,7 @@ public class EnemyDamageDealer : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(transform.position,transform.position + transform.forward * weaponLength);
+        Gizmos.color = Color.red;
+        Gizmos.DrawCube(transform.position, new Vector3(weaponWidth, weaponWidth, weaponLength));
     }
-
 }
