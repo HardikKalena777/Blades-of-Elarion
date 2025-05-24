@@ -11,7 +11,7 @@ public class MeleeDamage : MonoBehaviour
             EnemyAI enemy = other.GetComponent<EnemyAI>();
             if (enemy != null)
             {
-                enemy.TakeDamage(damageAmount);
+                //enemy.TakeDamage(damageAmount);
             }
         }
     }

@@ -8,9 +8,10 @@ namespace StarterAssets
 {
 	public class StarterAssetsInputs : MonoBehaviour
 	{
-		WeaponManager weaponManager;
-		ComboManager comboManager;
+		WeaponHandler weaponHandler;
+		CombatSystem combatSystem;
 		StarterAssetsInputs inputs;
+		DodgeRoll dodgeRoll;
 
         [Header("Character Input Values")]
 		public Vector2 move;
@@ -19,7 +20,8 @@ namespace StarterAssets
 		public bool sprint;
 		public bool draw;
 		public bool sheath;
-		public bool lightAttack;
+		public bool attack;
+		public bool dodge;
 
         [Header("Movement Settings")]
 		public bool analogMovement;
@@ -31,8 +33,10 @@ namespace StarterAssets
 
         private void Start()
         {
-            weaponManager = GetComponent<WeaponManager>();
-			comboManager = GetComponent<ComboManager>();
+			inputs = GetComponent<StarterAssetsInputs>();
+			weaponHandler = GetComponent<WeaponHandler>();
+			combatSystem = GetComponent<CombatSystem>();
+			dodgeRoll = GetComponent<DodgeRoll>();
         }
 
 #if ENABLE_INPUT_SYSTEM
@@ -64,27 +68,36 @@ namespace StarterAssets
 			DrawInput(value.isPressed);
 			if(value.isPressed)
 			{
-				weaponManager.HandleWeaponToggle();
+				weaponHandler.ToggleWeapon();
 			}
-        }
+		}
 
-		public void OnSheath(InputValue value)
-		{
-			SheathInput(value.isPressed);
-			if (value.isPressed)
-			{
-				weaponManager.HandleWeaponToggle();
+        public void OnSheath(InputValue value)
+        {
+            SheathInput(value.isPressed);
+            if (value.isPressed)
+            {
+                weaponHandler.ToggleWeapon();
             }
         }
 
-		public void OnLightAttack(InputValue value)
+		public void OnAttack(InputValue value)
 		{
-			LightAttackInput(value.isPressed);	
+			AttackInput(value.isPressed);
 			if(value.isPressed)
 			{
-				comboManager.Attack();
-            }
-        }
+				combatSystem.HandleAttackInput();
+			}
+		}
+
+		public void OnDodge(InputValue value)
+		{
+			DodgeInput(value.isPressed);
+			if(value.isPressed)
+			{
+				dodgeRoll.HandleRollInput();
+			}
+		}
 
 #endif
 
@@ -112,19 +125,24 @@ namespace StarterAssets
 		public void DrawInput(bool newDrawState)
 		{
 			draw = newDrawState;
-        }
+		}
 
 		public void SheathInput(bool newSheathState)
 		{
 			sheath = newSheathState;
 		}
 
-		public void LightAttackInput(bool newLightAttackState)
+		public void AttackInput(bool newAttackState)
 		{
-			lightAttack = newLightAttackState;
-        }
+			attack = newAttackState;
+		}
 
-        private void OnApplicationFocus(bool hasFocus)
+		public void DodgeInput(bool newDodgeState)
+		{
+			dodge = newDodgeState;
+		}
+
+		private void OnApplicationFocus(bool hasFocus)
 		{
 			SetCursorState(cursorLocked);
 		}

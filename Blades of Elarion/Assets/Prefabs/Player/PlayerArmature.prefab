@@ -1831,8 +1831,7 @@ GameObject:
   - component: {fileID: 8891314149907623645}
   - component: {fileID: 3481986074415726407}
   - component: {fileID: 4576347974070543895}
-  - component: {fileID: 4648674670202534507}
-  - component: {fileID: 3875522283380124491}
+  - component: {fileID: 2524953154877281415}
   m_Layer: 7
   m_Name: Shield
   m_TagString: Shield
@@ -1908,21 +1907,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &4648674670202534507
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2192034622731789658}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe1b65680d7e5844e8d438e9ccdfe0f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damageAmount: 10
---- !u!136 &3875522283380124491
-CapsuleCollider:
+--- !u!65 &2524953154877281415
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1931,18 +1917,16 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.3
-  m_Height: 1
-  m_Direction: 1
+  serializedVersion: 3
+  m_Size: {x: 0.6198269, y: 0.74898607, z: 0.1}
   m_Center: {x: 0.000058625665, y: 0.37581274, z: -0.0703985}
 --- !u!1 &2219301269653054765
 GameObject:
@@ -3015,6 +2999,7 @@ MonoBehaviour:
   draw: 0
   sheath: 0
   lightAttack: 0
+  aimLock: 0
   analogMovement: 0
   cursorLocked: 1
   cursorInputForLook: 1
@@ -3152,7 +3137,7 @@ MonoBehaviour:
   onBlock:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3875522283380124491}
+      - m_Target: {fileID: 2524953154877281415}
         m_TargetAssemblyTypeName: UnityEngine.Collider, UnityEngine
         m_MethodName: set_enabled
         m_Mode: 6
@@ -3167,7 +3152,7 @@ MonoBehaviour:
   onUnblock:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3875522283380124491}
+      - m_Target: {fileID: 2524953154877281415}
         m_TargetAssemblyTypeName: UnityEngine.Collider, UnityEngine
         m_MethodName: set_enabled
         m_Mode: 6
@@ -6787,6 +6772,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2978884028326158649}
   - component: {fileID: 190133683155276425}
+  - component: {fileID: 4758091173478655317}
   m_Layer: 7
   m_Name: DamageDealer
   m_TagString: Untagged
@@ -6830,6 +6816,27 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
+--- !u!65 &4758091173478655317
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8789496451431335066}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.05, y: 0.05, z: 1}
+  m_Center: {x: 0, y: 0, z: 0.5}
 --- !u!1 &8813786586381277048
 GameObject:
   m_ObjectHideFlags: 0
@@ -6839,6 +6846,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4091464120962322096}
+  - component: {fileID: 5480839611839680443}
+  - component: {fileID: 7146521552266553408}
   m_Layer: 7
   m_Name: hand_r
   m_TagString: Untagged
@@ -6868,6 +6877,40 @@ Transform:
   - {fileID: 4554387460950406704}
   m_Father: {fileID: 5089697799734904976}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5480839611839680443
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8813786586381277048}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.2, y: 0.2, z: 0.2}
+  m_Center: {x: 0, y: -0.1, z: 0}
+--- !u!114 &7146521552266553408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8813786586381277048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe1b65680d7e5844e8d438e9ccdfe0f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageAmount: 10
 --- !u!1 &8933986475528374910
 GameObject:
   m_ObjectHideFlags: 0

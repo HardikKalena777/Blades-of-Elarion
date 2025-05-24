@@ -105,6 +105,8 @@ namespace StarterAssets
         private CharacterController _controller;
         private StarterAssetsInputs _input;
         private GameObject _mainCamera;
+        private DodgeRoll dodgeRollSystem;
+        private CombatSystem combatSystem;
 
         private const float _threshold = 0.01f;
 
@@ -130,6 +132,8 @@ namespace StarterAssets
             {
                 _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
             }
+            dodgeRollSystem = GetComponent<DodgeRoll>();
+            combatSystem = GetComponent<CombatSystem>();
         }
 
         private void Start()
@@ -159,11 +163,24 @@ namespace StarterAssets
             JumpAndGravity();
             GroundedCheck();
             Move();
+            HandleRootMotion();
         }
 
         private void LateUpdate()
         {
             CameraRotation();
+        }
+
+        public void HandleRootMotion()
+        {
+            if (dodgeRollSystem.isRolling)
+            {
+                _animator.applyRootMotion = true;
+            }
+            else
+            {
+                _animator.applyRootMotion = false;
+            }
         }
 
         private void AssignAnimationIDs()

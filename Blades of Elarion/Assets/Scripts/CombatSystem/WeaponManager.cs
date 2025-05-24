@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 public class WeaponManager : MonoBehaviour
 {
-    EnemyDamageDealer damageDealer;
+    //EnemyDamageDealer damageDealer;
     public InputActionAsset playerInput;
     public InputAction block;
 
@@ -28,7 +28,7 @@ public class WeaponManager : MonoBehaviour
 
     private void Awake()
     {
-        damageDealer = GetComponentInChildren<EnemyDamageDealer>();
+        //damageDealer = GetComponentInChildren<EnemyDamageDealer>();
 
         animator = GetComponent<Animator>();
     }
@@ -50,6 +50,7 @@ public class WeaponManager : MonoBehaviour
             HandleWeaponSheath();
         }
     }
+
 
     public void HandleBlock()
     {
@@ -110,14 +111,14 @@ public class WeaponManager : MonoBehaviour
         HandleWeaponParent(weaponSheathTransform, weaponTransform);
     }
 
-    public void OnStartDealingDamage()
-    {
-        damageDealer.StartDealingDamage();
-    }
+    //public void OnStartDealingDamage()
+    //{
+    //    damageDealer.StartDealingDamage();
+    //}
 
-    public void OnEndDealingDamage()
-    {
-        damageDealer.EndDealingDamage();
-    }
+    //public void OnEndDealingDamage()
+    //{
+    //    damageDealer.EndDealingDamage();
+    //}
     #endregion
 }
