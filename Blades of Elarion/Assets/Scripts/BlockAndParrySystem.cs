@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using StarterAssets;
+using System.Collections;
 using UnityEngine;
 
 public class BlockAndParrySystem : MonoBehaviour
@@ -10,6 +11,7 @@ public class BlockAndParrySystem : MonoBehaviour
     [Header("References")]
     public Animator animator;
     public StaminaSystem staminaSystem;
+    ThirdPersonController movementController;
 
     [Header("State")]
     public bool isBlocking;
@@ -21,6 +23,10 @@ public class BlockAndParrySystem : MonoBehaviour
     public bool IsBlocking => isBlocking;
     public bool IsParrying => isParrying;
 
+    private void Awake()
+    {
+        movementController = GetComponent<ThirdPersonController>();
+    }
 
     void Update()
     {

@@ -108,6 +108,8 @@ namespace StarterAssets
         private DodgeRoll dodgeRollSystem;
         private CombatSystem combatSystem;
 
+        public static ThirdPersonController TPC_Instance;
+
         private const float _threshold = 0.01f;
 
         private bool _hasAnimator;
@@ -134,6 +136,7 @@ namespace StarterAssets
             }
             dodgeRollSystem = GetComponent<DodgeRoll>();
             combatSystem = GetComponent<CombatSystem>();
+            TPC_Instance = this;
         }
 
         private void Start()
@@ -169,6 +172,20 @@ namespace StarterAssets
         private void LateUpdate()
         {
             CameraRotation();
+        }
+
+        public void EnableMovement()
+        {
+            MoveSpeed = 2f;
+            SprintSpeed = 5.335f;
+            JumpHeight = 1.2f;
+        }
+
+        public void DisableMovement()
+        {
+            MoveSpeed = 0f;
+            SprintSpeed = 0f;
+            JumpHeight = 0f;
         }
 
         public void HandleRootMotion()

@@ -1,4 +1,6 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StaminaSystem : MonoBehaviour
 {
@@ -6,6 +8,7 @@ public class StaminaSystem : MonoBehaviour
     public float maxStamina = 100f;
     public float staminaRegenRate = 15f;
     public float regenDelay = 1.0f;
+    public Slider staminaSlider;
 
     private float currentStamina;
     private float lastStaminaUseTime;
@@ -21,6 +24,7 @@ public class StaminaSystem : MonoBehaviour
     void Update()
     {
         RegenerateStamina();
+        HandleUI();
     }
 
     public bool HasStamina(float amount)
@@ -44,6 +48,11 @@ public class StaminaSystem : MonoBehaviour
             currentStamina += staminaRegenRate * Time.deltaTime;
             currentStamina = Mathf.Min(currentStamina, maxStamina);
         }
+    }
+
+    void HandleUI()
+    {
+        staminaSlider.value = currentStamina / maxStamina;
     }
 
     public void RefillStamina()

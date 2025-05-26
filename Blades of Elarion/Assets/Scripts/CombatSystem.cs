@@ -1,4 +1,5 @@
 using StarterAssets;
+using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
@@ -8,6 +9,7 @@ public class CombatSystem : MonoBehaviour
     public float[] lightAttackStaminaCost = { 10f, 10f, 15f };
     public float[] unarmedAttackStaminaCost = { 5f, 5f, 8f };
     public float comboResetTime = 1.5f;
+    public TMP_Text comboText;
 
     [Header("References")]
     public Animator animator;
@@ -16,10 +18,11 @@ public class CombatSystem : MonoBehaviour
     public ThirdPersonController movementController;
     public WeaponHandler weaponHandler;
     public WeaponDamageDealer damageDealer;
+    public BlockAndParrySystem blockParry;
 
     public bool isAttacking = false;
     private bool comboQueued = false;
-    private int comboStep = 0;
+    public int comboStep = 0;
     private float lastAttackTime;
 
     void Start()
@@ -29,12 +32,22 @@ public class CombatSystem : MonoBehaviour
 
         if (movementController == null)
             movementController = GetComponent<ThirdPersonController>();
+        if(blockParry == null)
+            blockParry = GetComponent<BlockAndParrySystem>();
     }
 
     void Update()
     {
-        //HandleAttackInput();
+        HandleUI();
         ResetComboIfTimedOut();
+        if(isAttacking)
+        {
+            animator.SetLayerWeight(2, 0f);
+        }
+        else
+        {
+            animator.SetLayerWeight(2, 1f);
+        }
     }
 
     public void HandleAttackInput()
@@ -52,12 +65,30 @@ public class CombatSystem : MonoBehaviour
         //}
     }
 
+    void HandleUI()
+    {
+        if(comboStep > 0)
+        {
+            comboText.text = comboStep + "X"; 
+        }
+        else
+        {
+            comboText.text = string.Empty;
+        }
+    }
+
     void StartComboAttack()
     {
-        comboStep = comboStep >= 3 ? 0 : comboStep;
         bool usingWeapon = weaponHandler != null && weaponHandler.IsWeaponDrawn;
+        if (blockParry.IsBlocked())
+            return;
+        if (!usingWeapon)
+            return;
+        movementController.DisableMovement();
 
-        float staminaCost = usingWeapon ? lightAttackStaminaCost[comboStep] : unarmedAttackStaminaCost[comboStep];
+        comboStep = comboStep >= 3 ? 0 : comboStep;
+
+        float staminaCost = lightAttackStaminaCost[comboStep];
         if (!staminaSystem.HasStamina(staminaCost))
             return;
 
@@ -68,7 +99,7 @@ public class CombatSystem : MonoBehaviour
         comboQueued = false;
         lastAttackTime = Time.time;
 
-        string triggerName = usingWeapon ? $"LightAttack{comboStep}" : "UnarmedAttack";
+        string triggerName = $"LightAttack{comboStep}";
         animator.SetTrigger(triggerName);
     }
 
@@ -77,6 +108,7 @@ public class CombatSystem : MonoBehaviour
         if (!isAttacking && Time.time - lastAttackTime > comboResetTime)
         {
             comboStep = 0;
+            movementController.EnableMovement();
         }
     }
 

@@ -2553,8 +2553,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1608420695300956014}
-  - component: {fileID: 6691077012173325044}
-  - component: {fileID: 9158427238726160942}
   m_Layer: 7
   m_Name: hand_r
   m_TagString: Untagged
@@ -2584,40 +2582,6 @@ Transform:
   - {fileID: 1037971719338078374}
   m_Father: {fileID: 3485263164595476474}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &6691077012173325044
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3779944881954097593}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.2, y: 0.2, z: 0.2}
-  m_Center: {x: 0, y: -0.1, z: 0}
---- !u!114 &9158427238726160942
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3779944881954097593}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe1b65680d7e5844e8d438e9ccdfe0f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damageAmount: 10
 --- !u!1 &3833669974427785646
 GameObject:
   m_ObjectHideFlags: 0
@@ -5433,10 +5397,11 @@ GameObject:
   - component: {fileID: 8510446973749395559}
   - component: {fileID: 6857348544227094383}
   - component: {fileID: 6986649455721514600}
-  - component: {fileID: 5494619589202663511}
   - component: {fileID: 6552564749417277855}
   - component: {fileID: 8841308339576724854}
   - component: {fileID: 6049084018183814573}
+  - component: {fileID: 5494619589202663511}
+  - component: {fileID: 1651321717448638015}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -5452,7 +5417,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7036597285236709176}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.8837376, y: 0, z: -12.495598}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5536,7 +5501,7 @@ MonoBehaviour:
   GroundedRadius: 0.28
   GroundLayers:
     serializedVersion: 2
-    m_Bits: 9
+    m_Bits: 73
   CinemachineCameraTarget: {fileID: 1662676723625049298}
   TopClamp: 70
   BottomClamp: -30
@@ -5577,8 +5542,8 @@ MonoBehaviour:
   sprint: 0
   draw: 0
   sheath: 0
-  lightAttack: 0
-  aimLock: 0
+  attack: 0
+  dodge: 0
   analogMovement: 0
   cursorLocked: 1
   cursorInputForLook: 1
@@ -5695,6 +5660,7 @@ MonoBehaviour:
   maxStamina: 100
   staminaRegenRate: 15
   regenDelay: 1
+  staminaSlider: {fileID: 0}
 --- !u!114 &6986649455721514600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5711,24 +5677,6 @@ MonoBehaviour:
   weaponObject: {fileID: 3153882028883992172}
   weaponHipSocket: {fileID: 3302687535594768254}
   weaponHandSocket: {fileID: 1037971719338078374}
---- !u!114 &5494619589202663511
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7036597285236709176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78552f13cb775b54e88e98b9b86f33e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parryWindow: 0.3
-  blockStaminaDrain: 10
-  animator: {fileID: 2990146968301554195}
-  staminaSystem: {fileID: 6857348544227094383}
-  isBlocking: 0
-  isParrying: 0
 --- !u!114 &6552564749417277855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5785,13 +5733,47 @@ MonoBehaviour:
   - 5
   - 8
   comboResetTime: 1.5
+  comboText: {fileID: 0}
   animator: {fileID: 2990146968301554195}
   staminaSystem: {fileID: 6857348544227094383}
-  weaponHitbox: {fileID: 3613186213032775947}
+  weaponHitbox: {fileID: 0}
   movementController: {fileID: 8388462511494500729}
   weaponHandler: {fileID: 6986649455721514600}
   damageDealer: {fileID: 9183260208719122549}
+  blockParry: {fileID: 0}
   isAttacking: 0
+  comboStep: 0
+--- !u!114 &5494619589202663511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7036597285236709176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78552f13cb775b54e88e98b9b86f33e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parryWindow: 0.3
+  blockStaminaDrain: 50
+  animator: {fileID: 2990146968301554195}
+  staminaSystem: {fileID: 6857348544227094383}
+  isBlocking: 0
+  isParrying: 0
+--- !u!114 &1651321717448638015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7036597285236709176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 684d60a1a13ce3545affad88a84ab29b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layoutAnim: {fileID: 0}
 --- !u!1 &7210613704196731201
 GameObject:
   m_ObjectHideFlags: 0
@@ -6880,7 +6862,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dab3255945c1ed47a313e10755b96a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 10
+  damageAmount: 35
   isHeavyAttack: 0
   targetLayers:
     serializedVersion: 2
