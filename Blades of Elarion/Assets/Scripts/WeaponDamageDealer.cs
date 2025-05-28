@@ -5,7 +5,6 @@ using System.Collections.Generic;
 public class WeaponDamageDealer : MonoBehaviour
 {
     [Header("Damage Settings")]
-    public int damageAmount = 10;
     public bool isHeavyAttack = false;
 
     [Header("Detection")]
@@ -63,7 +62,7 @@ public class WeaponDamageDealer : MonoBehaviour
         // ❤️ Apply damage
         if (other.TryGetComponent<HealthSystem>(out var health))
         {
-            health.TakeDamage(damageAmount);
+            health.TakeDamage(health.damageAmount);
 
             if (hitVFX != null)
             {

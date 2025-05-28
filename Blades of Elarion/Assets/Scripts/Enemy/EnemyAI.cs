@@ -122,9 +122,9 @@ public class EnemyAI : MonoBehaviour
         float speed = agent.velocity.magnitude;
 
         if (currentState == EnemyState.Roaming && speed > 0.1f)
-            animator.SetFloat("Speed", 1f); // Walking
+            animator.SetFloat("Speed", 1f, 0.3f, Time.deltaTime); // Walking
         else if (currentState == EnemyState.Chasing && speed > 0.1f)
-            animator.SetFloat("Speed", 2f); // Running
+            animator.SetFloat("Speed", 2f, 0.3f, Time.deltaTime); // Running
         else
             animator.SetFloat("Speed", 0f); // Idle
     }

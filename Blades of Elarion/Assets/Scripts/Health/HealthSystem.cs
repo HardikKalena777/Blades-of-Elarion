@@ -8,8 +8,10 @@ public class HealthSystem : MonoBehaviour
 {
     public int currentHealth;
     public GameObject hitVFX;
+    public bool hasRagdoll = true; 
     public GameObject ragdoll;
-    public Slider healthBar; // Reference to the health bar UI element
+    public Slider healthBar; 
+    public int damageAmount = 10; 
 
     public Volume volume; 
     int maxHealth = 100;
@@ -36,10 +38,10 @@ public class HealthSystem : MonoBehaviour
     {
         currentHealth -= damage;
 
-        UpdateHealthUI(currentHealth, healthBar); // Update the health bar UI
+        UpdateHealthUI(currentHealth, healthBar); 
         animator.SetTrigger("Hit");
         CameraShake.Instance.ShakeCamera(1f, 0.2f);
-        HapticRumble.HR_Instance.Rumble(0.5f, 0.5f, 0.2f); // Trigger haptic feedback on hit
+        HapticRumble.HR_Instance.Rumble(0.5f, 0.5f, 0.2f); 
 
         UpdateVignetteIntensity();
 
@@ -62,13 +64,20 @@ public class HealthSystem : MonoBehaviour
     {
         if (healthBar != null)
         {
-            healthBar.value = (float)health / maxHealth; // Correctly update the health bar value as a percentage
+            healthBar.value = (float)health / maxHealth; 
         }
     }
 
     private void Die()
     {
-        Instantiate(ragdoll, transform.position, transform.rotation);
+        if (hasRagdoll && ragdoll != null)
+        {
+            Instantiate(ragdoll, transform.position, transform.rotation);
+        }
+        else
+        {
+            animator.SetTrigger("Die");
+        }
         Destroy(gameObject);
     }
 
@@ -77,7 +86,7 @@ public class HealthSystem : MonoBehaviour
         if (hitVFX != null)
         {
             GameObject vfx = Instantiate(hitVFX, hitPosition, Quaternion.identity);
-            Destroy(vfx, 1f); // Destroy the VFX after 1 second
+            Destroy(vfx, 1f); 
         }
     }
 }
