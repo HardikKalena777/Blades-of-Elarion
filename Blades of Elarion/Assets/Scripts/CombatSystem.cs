@@ -1,147 +1,153 @@
 using StarterAssets;
 using TMPro;
 using UnityEngine;
+using System.Collections;
 
 [RequireComponent(typeof(Animator))]
 public class CombatSystem : MonoBehaviour
 {
     [Header("Combat Settings")]
     public float[] lightAttackStaminaCost = { 10f, 10f, 15f };
-    public float[] unarmedAttackStaminaCost = { 5f, 5f, 8f };
     public float comboResetTime = 1.5f;
     public TMP_Text comboText;
 
     [Header("References")]
     public Animator animator;
     public StaminaSystem staminaSystem;
-    public Collider weaponHitbox; // CHANGED FROM Transform to Collider
+    public Collider weaponHitbox;
     public ThirdPersonController movementController;
     public WeaponHandler weaponHandler;
     public WeaponDamageDealer damageDealer;
     public BlockAndParrySystem blockParry;
 
-    public bool isAttacking = false;
-    private bool comboQueued = false;
-    public int comboStep = 0;
-    private float lastAttackTime;
+    private int comboStep = 0;
+    private bool isAttacking = false;
+    private bool inputBuffered = false;
+    private float lastAttackTime = 0f;
+    private Coroutine comboResetCoroutine;
 
     void Start()
     {
         if (animator == null)
             animator = GetComponent<Animator>();
-
         if (movementController == null)
             movementController = GetComponent<ThirdPersonController>();
-        if(blockParry == null)
+        if (blockParry == null)
             blockParry = GetComponent<BlockAndParrySystem>();
     }
 
     void Update()
     {
-        HandleUI();
-        ResetComboIfTimedOut();
-        if(isAttacking)
+        //HandleUI();
+        // Reset combo if too much time has passed since last attack
+        if (!isAttacking && Time.time - lastAttackTime > comboResetTime)
         {
-            animator.SetLayerWeight(2, 0f);
-        }
-        else
-        {
-            animator.SetLayerWeight(2, 1f);
+            ResetCombo();
         }
     }
 
     public void HandleAttackInput()
     {
-        //if (Input.GetButtonDown("Fire1") || Input.GetKeyDown(KeyCode.JoystickButton2)) // Gamepad West button
-        //{
-            if (isAttacking)
-            {
-                comboQueued = true;
-            }
-            else
-            {
-                StartComboAttack();
-            }
-        //}
-    }
+        bool usingWeapon = weaponHandler != null && weaponHandler.IsWeaponDrawn;
+        if(!usingWeapon)
+            return; 
+        if (blockParry != null && blockParry.IsBlocked())
+            return;
 
-    void HandleUI()
-    {
-        if(comboStep > 0)
+        if (!isAttacking)
         {
-            comboText.text = comboStep + "X"; 
+            // Start first attack
+            comboStep = 0;
+            TryAttack();
         }
         else
         {
-            comboText.text = string.Empty;
+            // Buffer input for next combo step
+            inputBuffered = true;
         }
     }
 
-    void StartComboAttack()
+    private void TryAttack()
     {
-        bool usingWeapon = weaponHandler != null && weaponHandler.IsWeaponDrawn;
-        if (blockParry.IsBlocked())
-            return;
-        if (!usingWeapon)
-            return;
-        movementController.DisableMovement();
-
-        comboStep = comboStep >= 3 ? 0 : comboStep;
+        // Check stamina
+        if (comboStep >= lightAttackStaminaCost.Length)
+            comboStep = 0;
 
         float staminaCost = lightAttackStaminaCost[comboStep];
         if (!staminaSystem.HasStamina(staminaCost))
             return;
 
         staminaSystem.UseStamina(staminaCost);
-        comboStep++;
         isAttacking = true;
-        //animator.applyRootMotion = true;
-        comboQueued = false;
         lastAttackTime = Time.time;
 
-        string triggerName = $"LightAttack{comboStep}";
+        // Play animation
+        string triggerName = $"LightAttack{comboStep + 1}";
         animator.SetTrigger(triggerName);
+
+        movementController.DisableMovement();
+
+        // Start/reset combo reset timer
+        if (comboResetCoroutine != null)
+            StopCoroutine(comboResetCoroutine);
+        comboResetCoroutine = StartCoroutine(ComboResetTimer());
     }
 
-    void ResetComboIfTimedOut()
-    {
-        if (!isAttacking && Time.time - lastAttackTime > comboResetTime)
-        {
-            comboStep = 0;
-            movementController.EnableMovement();
-        }
-    }
-
-    // Animation Events
-    public void OnComboWindow()
-    {
-        if (comboQueued)
-        {
-            StartComboAttack();
-        }
-    }
-
-    public void EndAttack()
+    // Called by animation event at the end of each attack animation
+    public void OnAttackAnimationEnd()
     {
         isAttacking = false;
+        movementController.EnableMovement();
+
+        if (inputBuffered && comboStep < lightAttackStaminaCost.Length - 1)
+        {
+            comboStep++;
+            inputBuffered = false;
+            TryAttack();
+        }
+        else
+        {
+            ResetCombo();
+        }
     }
 
+    private IEnumerator ComboResetTimer()
+    {
+        yield return new WaitForSeconds(comboResetTime);
+        ResetCombo();
+    }
+
+    private void ResetCombo()
+    {
+        comboStep = 0;
+        isAttacking = false;
+        inputBuffered = false;
+        if (comboText != null)
+            comboText.text = string.Empty;
+    }
+
+    //private void HandleUI()
+    //{
+    //    if (comboText != null)
+    //    {
+    //        comboText.text = isAttacking ? $"{comboStep + 1}X" : string.Empty;
+    //    }
+    //}
+
+    // Animation Events
     public void EnableWeaponHitbox()
     {
         if (weaponHitbox != null)
             weaponHitbox.enabled = true;
-        damageDealer.StartDealingDamage();
+        if (damageDealer != null)
+            damageDealer.StartDealingDamage();
     }
 
     public void DisableWeaponHitbox()
     {
         if (weaponHitbox != null)
             weaponHitbox.enabled = false;
-        damageDealer.EndDealingDamage();
-    }
-
-    public void StartRootMotionAttack()
-    {
-        isAttacking = true;
+        if (damageDealer != null)
+            damageDealer.EndDealingDamage();
     }
 }

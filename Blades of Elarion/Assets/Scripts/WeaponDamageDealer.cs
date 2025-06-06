@@ -6,6 +6,7 @@ public class WeaponDamageDealer : MonoBehaviour
 {
     [Header("Damage Settings")]
     public bool isHeavyAttack = false;
+    public int damageAmount;
 
     [Header("Detection")]
     public LayerMask targetLayers;
@@ -47,6 +48,7 @@ public class WeaponDamageDealer : MonoBehaviour
             {
                 Debug.Log("Attack was parried!");
                 transform.root.GetComponent<EnemyAI>()?.GetParried(); // Only if attacking enemy
+                transform.root.GetComponent<BossAI>()?.GetParried(); // Only if attacking lizard
                 alreadyHit.Add(other.gameObject);
                 return;
             }
@@ -62,7 +64,7 @@ public class WeaponDamageDealer : MonoBehaviour
         // ❤️ Apply damage
         if (other.TryGetComponent<HealthSystem>(out var health))
         {
-            health.TakeDamage(health.damageAmount);
+            health.TakeDamage(damageAmount);
 
             if (hitVFX != null)
             {

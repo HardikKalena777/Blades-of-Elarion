@@ -5419,8 +5419,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.8837376, y: 0, z: -12.495598}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8755515209318643705}
   - {fileID: 3084442143734825238}
@@ -5485,7 +5485,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26e54e5a728a9234ab24fcf1460ed8a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 2
+  MoveSpeed: 3
   SprintSpeed: 5.335
   RotationSmoothTime: 0.12
   SpeedChangeRate: 10
@@ -5544,6 +5544,7 @@ MonoBehaviour:
   sheath: 0
   attack: 0
   dodge: 0
+  toggleUI: 0
   analogMovement: 0
   cursorLocked: 1
   cursorInputForLook: 1
@@ -5689,8 +5690,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce884f3c5b29f2244861efad41e0c4e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBoss: 0
   currentHealth: 0
   hitVFX: {fileID: 1000013355911406, guid: d32aa916f50cac94db11e6f19821a58f, type: 3}
+  hasRagdoll: 1
   ragdoll: {fileID: 3251923512421446982, guid: 012b5ae2f5100bd4d9674469e08adeee, type: 3}
   healthBar: {fileID: 0}
   volume: {fileID: 0}
@@ -5728,21 +5731,15 @@ MonoBehaviour:
   - 10
   - 10
   - 15
-  unarmedAttackStaminaCost:
-  - 5
-  - 5
-  - 8
   comboResetTime: 1.5
   comboText: {fileID: 0}
   animator: {fileID: 2990146968301554195}
   staminaSystem: {fileID: 6857348544227094383}
-  weaponHitbox: {fileID: 0}
+  weaponHitbox: {fileID: 3613186213032775947}
   movementController: {fileID: 8388462511494500729}
   weaponHandler: {fileID: 6986649455721514600}
   damageDealer: {fileID: 9183260208719122549}
-  blockParry: {fileID: 0}
-  isAttacking: 0
-  comboStep: 0
+  blockParry: {fileID: 5494619589202663511}
 --- !u!114 &5494619589202663511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6862,8 +6859,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dab3255945c1ed47a313e10755b96a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 35
   isHeavyAttack: 0
+  damageAmount: 5
   targetLayers:
     serializedVersion: 2
     m_Bits: 64

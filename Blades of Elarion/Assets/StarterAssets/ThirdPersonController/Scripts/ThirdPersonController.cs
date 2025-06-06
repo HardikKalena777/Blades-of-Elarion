@@ -16,7 +16,7 @@ namespace StarterAssets
     {
         [Header("Player")]
         [Tooltip("Move speed of the character in m/s")]
-        public float MoveSpeed = 2.0f;
+        public float MoveSpeed = 4f;
 
         [Tooltip("Sprint speed of the character in m/s")]
         public float SprintSpeed = 5.335f;
@@ -176,7 +176,7 @@ namespace StarterAssets
 
         public void EnableMovement()
         {
-            MoveSpeed = 2f;
+            MoveSpeed = 4f;
             SprintSpeed = 5.335f;
             JumpHeight = 1.2f;
         }

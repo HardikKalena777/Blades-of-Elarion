@@ -6,12 +6,12 @@ using UnityEngine.UI;
 
 public class HealthSystem : MonoBehaviour
 {
+    public bool isBoss = false;
     public int currentHealth;
     public GameObject hitVFX;
     public bool hasRagdoll = true; 
     public GameObject ragdoll;
     public Slider healthBar; 
-    public int damageAmount = 10; 
 
     public Volume volume; 
     int maxHealth = 100;
@@ -39,7 +39,10 @@ public class HealthSystem : MonoBehaviour
         currentHealth -= damage;
 
         UpdateHealthUI(currentHealth, healthBar); 
-        animator.SetTrigger("Hit");
+        if(!isBoss)
+        {
+            animator.SetTrigger("Hit");   
+        }
         CameraShake.Instance.ShakeCamera(1f, 0.2f);
         HapticRumble.HR_Instance.Rumble(0.5f, 0.5f, 0.2f); 
 

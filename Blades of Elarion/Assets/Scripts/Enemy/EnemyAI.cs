@@ -12,6 +12,7 @@ public class EnemyAI : MonoBehaviour
     [Header("Roaming Settings")]
     public float roamRadius = 5f;
     public float roamInterval = 3f;
+    public float roamCooldown;
 
     [Header("Attack Settings")]
     public float attackCooldown = 2f;
@@ -84,11 +85,23 @@ public class EnemyAI : MonoBehaviour
     {
         if (Time.time >= lastRoamTime + roamInterval || agent.remainingDistance < 0.5f)
         {
-            Vector3 roamPosition = GetRandomPoint(startPosition, roamRadius);
-            agent.SetDestination(roamPosition);
-            agent.speed = 2.5f; 
-            lastRoamTime = Time.time;
+            roamCooldown -= Time.deltaTime;
+            agent.speed = 0f;
+            animator.SetFloat("Speed", 0f); 
+            if (roamCooldown <= 0f)
+            {
+                AfterRoamCooldown();
+                roamCooldown = roamInterval; 
+            }
         }
+    }
+
+    void AfterRoamCooldown()
+    {
+        Vector3 roamPosition = GetRandomPoint(startPosition, roamRadius);
+        agent.SetDestination(roamPosition);
+        agent.speed = 2f;
+        lastRoamTime = Time.time;
     }
 
     private void HandleChasing()
@@ -96,7 +109,7 @@ public class EnemyAI : MonoBehaviour
         if (player != null)
         {
             agent.SetDestination(player.position);
-            agent.speed = 4f;
+            agent.speed = 3.5f;
         }
     }
 
@@ -119,11 +132,10 @@ public class EnemyAI : MonoBehaviour
 
     private void UpdateAnimation()
     {
-        float speed = agent.velocity.magnitude;
 
-        if (currentState == EnemyState.Roaming && speed > 0.1f)
+        if (currentState == EnemyState.Roaming && agent.speed > 0.1f)
             animator.SetFloat("Speed", 1f, 0.3f, Time.deltaTime); // Walking
-        else if (currentState == EnemyState.Chasing && speed > 0.1f)
+        else if (currentState == EnemyState.Chasing && agent.speed > 0.1f)
             animator.SetFloat("Speed", 2f, 0.3f, Time.deltaTime); // Running
         else
             animator.SetFloat("Speed", 0f); // Idle
@@ -150,6 +162,8 @@ public class EnemyAI : MonoBehaviour
         SetState(EnemyState.Parried);
         agent.ResetPath();
         animator.SetTrigger("Parried");
+        agent.speed = 0f; // Stop moving
+        animator.SetFloat("Speed", 0f); // Reset speed animation
         CameraShake.Instance.ShakeCamera(1f, 0.2f);
         HapticRumble.HR_Instance.Rumble(0.5f, 0.5f, 0.2f);
         Invoke(nameof(RecoverFromParry), 2f); // Recover after 2 seconds
@@ -157,7 +171,7 @@ public class EnemyAI : MonoBehaviour
 
     private void RecoverFromParry()
     {
-        SetState(EnemyState.Roaming);
+        SetState(EnemyState.Attacking);
     }
 
     public void StartDealingDamage()
