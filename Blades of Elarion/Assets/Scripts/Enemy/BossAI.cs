@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(NavMeshAgent))]
@@ -7,17 +8,21 @@ public class BossAI : MonoBehaviour
 {
     public WeaponDamageDealer weaponDamageDealerLeft;
     public WeaponDamageDealer weaponDamageDealerRight;
+    public EnemySO enemyData;
 
     [Header("Detection Ranges")]
-    public float followRange = 10f;
-    public float attackRange = 2f;
+    public float followRange;
+    public float attackRange;
 
     [Header("Roaming Settings")]
-    public float roamRadius = 5f;
-    public float roamInterval = 3f;
+    public float roamRadius;
+    public float roamInterval;
 
     [Header("Attack Settings")]
-    public float attackCooldown = 2f;
+    public float attackCooldown;
+
+    [Header("Events")]
+    public UnityEvent onBattleStart;
 
     private Transform player;
     private NavMeshAgent agent;
@@ -27,7 +32,9 @@ public class BossAI : MonoBehaviour
     private float lastRoamTime;
     private float lastAttackTime;
 
-    private enum EnemyState { Chasing, Attacking, Parried }
+    private bool battleStarted = false;
+
+    private enum EnemyState { Chasing, Attacking, Parried, Idle }
     private EnemyState currentState;
 
     private void Awake()
@@ -36,6 +43,19 @@ public class BossAI : MonoBehaviour
         animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
         startPosition = transform.position;
+    }
+
+    private void Start()
+    {
+        followRange = enemyData.followRange;
+
+        roamRadius = enemyData.roamRadius;
+        roamInterval = enemyData.roamInterval;
+
+        attackRange = enemyData.attackRange;
+        attackCooldown = enemyData.attackCooldown;
+
+        GetComponent<HealthSystem>().maxHealth = enemyData.maxHealth;
     }
 
     private void Update()
@@ -52,7 +72,13 @@ public class BossAI : MonoBehaviour
         {
             SetState(EnemyState.Chasing);
         }
-        transform.LookAt(player);
+        else if(distanceToPlayer > followRange)
+        {
+            SetState(EnemyState.Idle);
+        }
+
+        if ((currentState == EnemyState.Chasing || currentState == EnemyState.Attacking) && player != null)
+            transform.LookAt(player);
 
         HandleStates();
         UpdateAnimation();
@@ -62,12 +88,31 @@ public class BossAI : MonoBehaviour
     {
         if (currentState == newState) return;
         currentState = newState;
+
+        switch (newState)
+        {
+            case EnemyState.Attacking:
+                animator.SetTrigger("Attack");
+                lastAttackTime = Time.time;
+                agent.ResetPath();
+                agent.speed = 0f;
+                break;
+            case EnemyState.Parried:
+                GetParried();
+                agent.ResetPath();
+                break;
+            // Add other state transitions as needed
+        }
     }
 
     private void HandleStates()
     {
         switch (currentState)
         {
+            case EnemyState.Idle:
+                agent.ResetPath();
+                animator.SetFloat("Speed", 0f, 0.3f, Time.deltaTime); // Idle
+                break;
             case EnemyState.Chasing:
                 HandleChasing();
                 break;
@@ -77,11 +122,15 @@ public class BossAI : MonoBehaviour
         }
     }
 
-
     private void HandleChasing()
     {
         if (player != null)
         {
+            if (!battleStarted)
+            {
+                onBattleStart?.Invoke();
+                battleStarted = true;
+            }
             agent.SetDestination(player.position);
             agent.speed = 2.5f;
         }
@@ -90,16 +139,7 @@ public class BossAI : MonoBehaviour
     private void HandleAttacking()
     {
         agent.ResetPath();
-        //Vector3 direction = (player.position - transform.position).normalized;
-        //direction.y = 0f; // Keep only horizontal rotation
-        //if (direction.sqrMagnitude > 0.001f)
-        //{
-        //    Quaternion targetRotation = Quaternion.LookRotation(direction);
-        //    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 8f);
-        //}
-        animator.SetTrigger("Attack");
         agent.speed = 0f;
-        lastAttackTime = Time.time;
     }
 
     private void UpdateAnimation()
@@ -123,8 +163,6 @@ public class BossAI : MonoBehaviour
         if (currentState == EnemyState.Parried) return;
 
         SetState(EnemyState.Parried);
-        agent.ResetPath();
-        animator.SetTrigger("Parried");
         CameraShake.Instance.ShakeCamera(1f, 0.2f);
         HapticRumble.HR_Instance.Rumble(0.5f, 0.5f, 0.2f);
         Invoke(nameof(RecoverFromParry), 2f); // Recover after 2 seconds
@@ -135,16 +173,33 @@ public class BossAI : MonoBehaviour
         SetState(EnemyState.Attacking);
     }
 
-    public void StartDealingDamage()
+    public void StartDealingDamageLeft()
     {
         weaponDamageDealerLeft.StartDealingDamage();
+    }
+
+    public void EndDealingDamageLeft()
+    {
+        weaponDamageDealerLeft.EndDealingDamage();
+    }
+
+    public void StartDealingDamageRight()
+    {
         weaponDamageDealerRight.StartDealingDamage();
     }
 
-    public void EndDealingDamage()
+    public void EndDealingDamageRight()
     {
-        weaponDamageDealerLeft.EndDealingDamage();
         weaponDamageDealerRight.EndDealingDamage();
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, followRange);
     }
 
 }

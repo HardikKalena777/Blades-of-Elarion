@@ -1,5 +1,9 @@
-﻿ using UnityEngine;
-#if ENABLE_INPUT_SYSTEM 
+﻿using Cysharp.Threading.Tasks;
+using Unity.Cinemachine;
+using UnityEngine;
+using UnityEngine.Events;
+
+#if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 #endif
 
@@ -15,11 +19,14 @@ namespace StarterAssets
     public class ThirdPersonController : MonoBehaviour
     {
         [Header("Player")]
+        public Transform startingPoint;
         [Tooltip("Move speed of the character in m/s")]
-        public float MoveSpeed = 4f;
+        private float MoveSpeed = 4f;
+        public float jogSpeed;
 
         [Tooltip("Sprint speed of the character in m/s")]
-        public float SprintSpeed = 5.335f;
+        private float SprintSpeed = 5.335f;
+        public float runSpeed;
 
         [Tooltip("How fast the character turns to face movement direction")]
         [Range(0.0f, 0.3f)]
@@ -60,6 +67,7 @@ namespace StarterAssets
         public LayerMask GroundLayers;
 
         [Header("Cinemachine")]
+        public CinemachineCamera CinemachineCamera;
         [Tooltip("The follow target set in the Cinemachine Virtual Camera that the camera will follow")]
         public GameObject CinemachineCameraTarget;
 
@@ -114,6 +122,8 @@ namespace StarterAssets
 
         private bool _hasAnimator;
 
+        public UnityEvent onGameStart;
+
         private bool IsCurrentDeviceMouse
         {
             get
@@ -129,6 +139,10 @@ namespace StarterAssets
 
         private void Awake()
         {
+            MoveSpeed = jogSpeed;
+            SprintSpeed = runSpeed;
+            if (startingPoint != null)
+                transform.position = startingPoint.position;
             // get a reference to our main camera
             if (_mainCamera == null)
             {
@@ -163,10 +177,14 @@ namespace StarterAssets
         {
             _hasAnimator = TryGetComponent(out _animator);
 
+            StartGame();
             JumpAndGravity();
             GroundedCheck();
             Move();
             HandleRootMotion();
+
+            // Smoothly handle POV only while sprinting
+            HandlePOV(_input.sprint);
         }
 
         private void LateUpdate()
@@ -174,10 +192,36 @@ namespace StarterAssets
             CameraRotation();
         }
 
+        public async void StartGame()
+        {
+            if(Input.anyKeyDown)
+            {
+                onGameStart?.Invoke();
+                _animator.SetTrigger("Start");
+                await UniTask.Delay(3000);
+                _playerInput.enabled = true;
+            }
+        }
+
+        public void HandlePOV(bool sprintInput)
+        {
+            if(_input.move.magnitude > 0)
+            {
+                // Smoothly interpolate FOV for a more natural transition
+                float targetFOV = sprintInput ? 55f : 50f;
+                float smoothSpeed = 10f; // Adjust for faster/slower transition
+                CinemachineCamera.Lens.FieldOfView = Mathf.Lerp(
+                    CinemachineCamera.Lens.FieldOfView,
+                    targetFOV,
+                    Time.deltaTime * smoothSpeed
+                );
+            }
+        }
+
         public void EnableMovement()
         {
-            MoveSpeed = 4f;
-            SprintSpeed = 5.335f;
+            MoveSpeed = jogSpeed;
+            SprintSpeed = runSpeed;
             JumpHeight = 1.2f;
         }
 
@@ -190,7 +234,7 @@ namespace StarterAssets
 
         public void HandleRootMotion()
         {
-            if (dodgeRollSystem.isRolling)
+            if (dodgeRollSystem.isRolling || combatSystem.isAttacking)
             {
                 _animator.applyRootMotion = true;
             }

@@ -21,7 +21,7 @@ public class CombatSystem : MonoBehaviour
     public BlockAndParrySystem blockParry;
 
     private int comboStep = 0;
-    private bool isAttacking = false;
+    public bool isAttacking = false;
     private bool inputBuffered = false;
     private float lastAttackTime = 0f;
     private Coroutine comboResetCoroutine;
@@ -38,8 +38,6 @@ public class CombatSystem : MonoBehaviour
 
     void Update()
     {
-        //HandleUI();
-        // Reset combo if too much time has passed since last attack
         if (!isAttacking && Time.time - lastAttackTime > comboResetTime)
         {
             ResetCombo();
@@ -150,4 +148,5 @@ public class CombatSystem : MonoBehaviour
         if (damageDealer != null)
             damageDealer.EndDealingDamage();
     }
+
 }

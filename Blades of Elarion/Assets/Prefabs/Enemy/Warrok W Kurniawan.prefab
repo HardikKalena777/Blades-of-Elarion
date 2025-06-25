@@ -340,8 +340,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1938912140181326827}
-  - component: {fileID: 4766206267213953784}
   - component: {fileID: 2487131822922951327}
+  - component: {fileID: 2589735041614664385}
   m_Layer: 6
   m_Name: mixamorig:LeftHand
   m_TagString: Untagged
@@ -369,27 +369,6 @@ Transform:
   - {fileID: 2642549193569101759}
   m_Father: {fileID: 5557122858198472974}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &4766206267213953784
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 696840888653121339}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.8
-  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!114 &2487131822922951327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -410,6 +389,29 @@ MonoBehaviour:
   targetTags:
   - Player
   hitVFX: {fileID: 1000013355911406, guid: d32aa916f50cac94db11e6f19821a58f, type: 3}
+--- !u!136 &2589735041614664385
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 696840888653121339}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.65
+  m_Height: 2.6
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &846891997651430193
 GameObject:
   m_ObjectHideFlags: 0
@@ -2706,7 +2708,35 @@ MonoBehaviour:
   hasRagdoll: 1
   ragdoll: {fileID: 1298600190089418360, guid: 5838d2c8b41d02548b535096512bb712, type: 3}
   healthBar: {fileID: 0}
+  onDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 1
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Slider, UnityEngine.UI
+        m_MethodName: set_value
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 1
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   volume: {fileID: 0}
+  maxHealth: 0
 --- !u!114 &5603432338843963223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2721,11 +2751,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponDamageDealerLeft: {fileID: 2487131822922951327}
   weaponDamageDealerRight: {fileID: 4194251432697702002}
-  followRange: 10
+  enemyData: {fileID: 11400000, guid: 7ba2bf4da6ee200459ea0019d5833cfc, type: 2}
+  followRange: 35
   attackRange: 5
   roamRadius: 5
   roamInterval: 3
   attackCooldown: 5
+  onBattleStart:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Warrok W Kurniawan
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!195 &7310702955812888656
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2745,7 +2803,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0
+  m_BaseOffset: -0.2
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!1 &8082081271173016195
@@ -2851,8 +2909,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2197389191450062896}
-  - component: {fileID: 4939079247784258235}
   - component: {fileID: 4194251432697702002}
+  - component: {fileID: 7067219777341397278}
   m_Layer: 6
   m_Name: mixamorig:RightHand
   m_TagString: Untagged
@@ -2880,27 +2938,6 @@ Transform:
   - {fileID: 4342670880150870447}
   m_Father: {fileID: 3588791615582570234}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &4939079247784258235
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8209790050632378739}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.8
-  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!114 &4194251432697702002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2921,6 +2958,29 @@ MonoBehaviour:
   targetTags:
   - Player
   hitVFX: {fileID: 1000013355911406, guid: d32aa916f50cac94db11e6f19821a58f, type: 3}
+--- !u!136 &7067219777341397278
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8209790050632378739}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.65
+  m_Height: 2.6
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8395483259550225939
 GameObject:
   m_ObjectHideFlags: 0

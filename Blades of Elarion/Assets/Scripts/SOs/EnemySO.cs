@@ -7,6 +7,8 @@ public class EnemySO : ScriptableObject
 
     [Header("Combat")]  
     public float attackCooldown;
-    public float attackDamage;
-    public float newDestinationCooldown;
+    public float attackRange;
+    public float followRange;
+    public float roamRadius;
+    public float roamInterval;
 }

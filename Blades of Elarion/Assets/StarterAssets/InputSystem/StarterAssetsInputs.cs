@@ -8,6 +8,7 @@ namespace StarterAssets
 {
 	public class StarterAssetsInputs : MonoBehaviour
 	{
+		ThirdPersonController controller;
 		WeaponHandler weaponHandler;
 		CombatSystem combatSystem;
 		StarterAssetsInputs inputs;
@@ -36,6 +37,7 @@ namespace StarterAssets
         private void Start()
         {
 			inputs = GetComponent<StarterAssetsInputs>();
+			controller = GetComponent<ThirdPersonController>();
 			weaponHandler = GetComponent<WeaponHandler>();
 			combatSystem = GetComponent<CombatSystem>();
 			dodgeRoll = GetComponent<DodgeRoll>();

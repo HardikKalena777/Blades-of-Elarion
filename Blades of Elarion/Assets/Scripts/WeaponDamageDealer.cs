@@ -44,7 +44,12 @@ public class WeaponDamageDealer : MonoBehaviour
         // 🛡️ BLOCK & PARRY CHECK
         if (other.TryGetComponent<BlockAndParrySystem>(out var blockAndParry))
         {
-            if (blockAndParry.IsParryActive())
+            StaminaSystem staminaSystem = other.GetComponent<StaminaSystem>();
+            if (staminaSystem != null && staminaSystem.CurrentStamina == 0)
+            {
+                Debug.Log("Stamina depleted! Taking damage.");
+            }
+            else if (blockAndParry.IsParryActive())
             {
                 Debug.Log("Attack was parried!");
                 transform.root.GetComponent<EnemyAI>()?.GetParried(); // Only if attacking enemy

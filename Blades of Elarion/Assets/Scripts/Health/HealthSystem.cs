@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.HighDefinition;
 using UnityEngine.UI;
@@ -11,10 +12,11 @@ public class HealthSystem : MonoBehaviour
     public GameObject hitVFX;
     public bool hasRagdoll = true; 
     public GameObject ragdoll;
-    public Slider healthBar; 
+    public Slider healthBar;
+    public UnityEvent onDeath;
 
-    public Volume volume; 
-    int maxHealth = 100;
+    public Volume volume;
+    public int maxHealth;
     Animator animator;
 
     private Vignette vignette; 
@@ -73,6 +75,7 @@ public class HealthSystem : MonoBehaviour
 
     private void Die()
     {
+        onDeath?.Invoke();
         if (hasRagdoll && ragdoll != null)
         {
             Instantiate(ragdoll, transform.position, transform.rotation);

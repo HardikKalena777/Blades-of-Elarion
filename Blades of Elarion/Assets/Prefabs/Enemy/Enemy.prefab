@@ -3252,7 +3252,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -11.788513, y: 0}
+  m_AnchoredPosition: {x: 11.788513, y: 0}
   m_SizeDelta: {x: -23.577, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7884317974229730270
@@ -3305,6 +3305,7 @@ GameObject:
   - component: {fileID: 5936011162090466255}
   - component: {fileID: 4708921130853235337}
   - component: {fileID: 1943018099522082216}
+  - component: {fileID: 4871342934760587274}
   m_Layer: 6
   m_Name: HealthCanvas
   m_TagString: Untagged
@@ -3319,14 +3320,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2212052513273144637}
-  m_LocalRotation: {x: -4.99e-42, y: -1, z: 4.6565984e-10, w: -1.0715476e-32}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.0674019, y: 0.0674019, z: 0.0674019}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7326995352686327868}
   m_Father: {fileID: 6565781401725046492}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -3395,6 +3396,19 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &4871342934760587274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2212052513273144637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a3e23d2daa6014498b8061897b75a18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
 --- !u!1 &2292199517452638027
 GameObject:
   m_ObjectHideFlags: 0
@@ -4121,7 +4135,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 7692181499694846910}
   m_HandleRect: {fileID: 0}
-  m_Direction: 0
+  m_Direction: 1
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
@@ -4162,7 +4176,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -5, y: 0}
+  m_AnchoredPosition: {x: 5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &3896779413777230503
@@ -4601,11 +4615,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7101026eb788bc2428d41f44130cc74f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  followRange: 10
+  followRange: 20
   attackRange: 1.5
   roamRadius: 15
   roamInterval: 3
-  attackCooldown: 2
+  roamCooldown: 0
+  attackCooldown: 3
 --- !u!114 &5818523218463702236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4624,7 +4639,11 @@ MonoBehaviour:
   hasRagdoll: 1
   ragdoll: {fileID: 7609816584872454532, guid: 9c917a37eadc9e843ac67e4b87998659, type: 3}
   healthBar: {fileID: 5070959741502241086}
+  onDeath:
+    m_PersistentCalls:
+      m_Calls: []
   volume: {fileID: 0}
+  maxHealth: 50
 --- !u!1 &4808773997583149512
 GameObject:
   m_ObjectHideFlags: 0
@@ -5227,7 +5246,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -7.1437073, y: 0}
+  m_AnchoredPosition: {x: 7.1437073, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6595760761439718332
