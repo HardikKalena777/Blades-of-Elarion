@@ -92,12 +92,14 @@ public class BlockAndParrySystem : MonoBehaviour
 
         isBlocking = true;
         animator.SetBool("IsBlocking", true);
+        movementController.DisableMovement();
     }
 
     void StopBlocking()
     {
         isBlocking = false;
         animator.SetBool("IsBlocking", false);
+        movementController.EnableMovement();
     }
 
     public void OnBlockedHit()

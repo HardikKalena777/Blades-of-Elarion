@@ -121,9 +121,10 @@ namespace StarterAssets
         private const float _threshold = 0.01f;
 
         private bool _hasAnimator;
+        bool hasGameStarted = false;
 
         public UnityEvent onGameStart;
-
+        public UnityEvent onGameStarted;
         private bool IsCurrentDeviceMouse
         {
             get
@@ -194,12 +195,14 @@ namespace StarterAssets
 
         public async void StartGame()
         {
-            if(Input.anyKeyDown)
+            if(Input.anyKeyDown && !hasGameStarted)
             {
                 onGameStart?.Invoke();
                 _animator.SetTrigger("Start");
                 await UniTask.Delay(3000);
                 _playerInput.enabled = true;
+                onGameStarted?.Invoke();
+                hasGameStarted = true;
             }
         }
 

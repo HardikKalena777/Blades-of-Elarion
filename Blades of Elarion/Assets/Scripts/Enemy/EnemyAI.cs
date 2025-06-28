@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -5,6 +6,10 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyAI : MonoBehaviour
 {
+    [Header("Enemy Stats")]
+    public int level;
+    public TMP_Text levelText;
+
     [Header("Detection Ranges")]
     public float followRange = 10f;
     public float attackRange = 2f;
@@ -20,6 +25,7 @@ public class EnemyAI : MonoBehaviour
     private Transform player;
     private NavMeshAgent agent;
     private Animator animator;
+    private HealthSystem health;
 
     private Vector3 startPosition;
     private float lastRoamTime;
@@ -30,12 +36,18 @@ public class EnemyAI : MonoBehaviour
 
     private void Awake()
     {
+        health = GetComponent<HealthSystem>();
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
         startPosition = transform.position;
         roamInterval = Random.Range(2f, 10f);
         attackCooldown = Random.Range(4f, 5f);
+    }
+
+    private void Start()
+    {
+        SetHealth();
     }
 
     private void Update()
@@ -64,6 +76,24 @@ public class EnemyAI : MonoBehaviour
 
         HandleStates();
         UpdateAnimation();
+    }
+
+    private void SetHealth()
+    {
+        level = Random.Range(1, 3);
+        levelText.text = level.ToString();
+        if (level == 1)
+        {
+            health.maxHealth = Random.Range(50, 80);
+        }
+        if (level == 2)
+        {
+            health.maxHealth = Random.Range(90, 110);
+        }
+        if (level == 3)
+        {
+            health.maxHealth = Random.Range(120, 150);
+        }
     }
 
     private void SetState(EnemyState newState)

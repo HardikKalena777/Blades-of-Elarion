@@ -45,7 +45,7 @@ public class HealthSystem : MonoBehaviour
         {
             animator.SetTrigger("Hit");   
         }
-        CameraShake.Instance.ShakeCamera(1f, 0.2f);
+        CameraShake.Instance.ShakeCamera(5f, 0.2f);
         HapticRumble.HR_Instance.Rumble(0.5f, 0.5f, 0.2f); 
 
         UpdateVignetteIntensity();

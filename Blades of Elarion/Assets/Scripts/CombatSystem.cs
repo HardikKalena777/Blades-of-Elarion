@@ -42,6 +42,7 @@ public class CombatSystem : MonoBehaviour
         {
             ResetCombo();
         }
+        HandleUI();
     }
 
     public void HandleAttackInput()
@@ -100,6 +101,7 @@ public class CombatSystem : MonoBehaviour
         if (inputBuffered && comboStep < lightAttackStaminaCost.Length - 1)
         {
             comboStep++;
+            StartCoroutine(ComboTextAnimation()); // Show combo text animation
             inputBuffered = false;
             TryAttack();
         }
@@ -124,13 +126,51 @@ public class CombatSystem : MonoBehaviour
             comboText.text = string.Empty;
     }
 
-    //private void HandleUI()
-    //{
-    //    if (comboText != null)
-    //    {
-    //        comboText.text = isAttacking ? $"{comboStep + 1}X" : string.Empty;
-    //    }
-    //}
+    private void HandleUI()
+    {
+        if(isAttacking)
+        {
+            StartCoroutine(ComboTextAnimation());
+        }
+        else
+        {
+            if (comboText != null)
+                comboText.text = string.Empty;
+        }
+    }
+
+    IEnumerator ComboTextAnimation()
+    {
+        if (comboText != null)
+        {
+            float startSize = 150f;
+            float peakSize = 200f;
+            float duration = 0.25f; // time to grow/shrink
+            float elapsed = 0f;
+
+            // Grow
+            while (elapsed < duration)
+            {
+                float t = elapsed / duration;
+                comboText.fontSize = Mathf.Lerp(startSize, peakSize, t);
+                comboText.text = $"{comboStep + 1}X";
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+            comboText.fontSize = peakSize;
+
+            // Shrink
+            elapsed = 0f;
+            while (elapsed < duration)
+            {
+                float t = elapsed / duration;
+                comboText.fontSize = Mathf.Lerp(peakSize, startSize, t);
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+            comboText.fontSize = startSize;
+        }
+    }
 
     // Animation Events
     public void EnableWeaponHitbox()
