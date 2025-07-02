@@ -13,7 +13,6 @@ namespace StarterAssets
 		CombatSystem combatSystem;
 		StarterAssetsInputs inputs;
 		DodgeRoll dodgeRoll;
-		UIManager uiManager;
 
         [Header("Character Input Values")]
 		public Vector2 move;
@@ -41,7 +40,6 @@ namespace StarterAssets
 			weaponHandler = GetComponent<WeaponHandler>();
 			combatSystem = GetComponent<CombatSystem>();
 			dodgeRoll = GetComponent<DodgeRoll>();
-			uiManager = GetComponent<UIManager>();
         }
 
 #if ENABLE_INPUT_SYSTEM
@@ -104,14 +102,6 @@ namespace StarterAssets
 			}
 		}
 
-		public void OnToggleUI(InputValue value)
-		{
-			ToggleUIInput(value.isPressed);
-			if(value.isPressed)
-			{
-				uiManager.ToggleUI();
-			}
-        }
 
 #endif
 

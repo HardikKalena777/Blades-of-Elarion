@@ -16,6 +16,9 @@ public class DodgeRoll : MonoBehaviour
     public bool isRolling = false;
     private float lastRollTime;
 
+    // Store the roll direction
+    private Vector3 rollDirection = Vector3.zero;
+
     void Start()
     {
         if (animator == null)
@@ -24,14 +27,6 @@ public class DodgeRoll : MonoBehaviour
         if (movementController == null)
             movementController = GetComponent<ThirdPersonController>();
     }
-
-    //void Update()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.JoystickButton2))
-    //    {
-    //        HandleRollInput();
-    //    }
-    //}
 
     public void HandleRollInput()
     {
@@ -50,6 +45,21 @@ public class DodgeRoll : MonoBehaviour
         isRolling = true;
         lastRollTime = Time.time;
 
+        // Get the current movement input direction
+        Vector2 moveInput = movementController.GetComponent<StarterAssetsInputs>().move;
+
+        // If no input, roll forward
+        if (moveInput.sqrMagnitude < 0.01f)
+            moveInput = Vector2.up;
+
+        // Convert input to world direction
+        rollDirection = transform.right * moveInput.x + transform.forward * moveInput.y;
+        rollDirection.Normalize();
+
+        // Optionally, set animator parameters for roll direction (if using a blend tree)
+        animator.SetFloat("RollHorizontal", moveInput.x);
+        animator.SetFloat("RollVertical", moveInput.y);
+
         animator.SetTrigger("Roll");
     }
 
@@ -58,5 +68,11 @@ public class DodgeRoll : MonoBehaviour
     {
         isRolling = false;
         animator.applyRootMotion = false;
+    }
+
+    // Optionally, expose roll direction for use in root motion or movement scripts
+    public Vector3 GetRollDirection()
+    {
+        return rollDirection;
     }
 }

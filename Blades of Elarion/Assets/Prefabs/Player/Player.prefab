@@ -5292,6 +5292,9 @@ GameObject:
   - component: {fileID: 8841308339576724854}
   - component: {fileID: 6049084018183814573}
   - component: {fileID: 5494619589202663511}
+  - component: {fileID: 2782481313253055419}
+  - component: {fileID: 2183758742570373296}
+  - component: {fileID: 3299136502363862073}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -5403,8 +5406,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5415,9 +5418,9 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+        m_TargetAssemblyTypeName: PlaceReveal, Assembly-CSharp
+        m_MethodName: RevealPlace
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -5625,7 +5628,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBoss: 0
-  currentHealth: 0
+  currentHealth: 100
   hitVFX: {fileID: 1000013355911406, guid: d32aa916f50cac94db11e6f19821a58f, type: 3}
   hasRagdoll: 1
   ragdoll: {fileID: 8143697945604850671, guid: 5fd0e7ca9e9128e4faa7f1fa569d5ef2, type: 3}
@@ -5666,11 +5669,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lightAttackStaminaCost:
-  - 5
-  - 5
-  - 5
-  - 5
-  - 5
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
   comboResetTime: 2
   comboText: {fileID: 0}
   animator: {fileID: 2990146968301554195}
@@ -5699,6 +5702,55 @@ MonoBehaviour:
   staminaSystem: {fileID: 6857348544227094383}
   isBlocking: 0
   isParrying: 0
+--- !u!114 &2782481313253055419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7036597285236709176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b285156890692846bed71ba34130fba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerFollowCamera: {fileID: 0}
+  targetCamera: {fileID: 0}
+  lockOnRaduis: 10
+  targetLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  currentTarget: {fileID: 0}
+  isLockedOn: 0
+  rotationSpeed: 10
+--- !u!114 &2183758742570373296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7036597285236709176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5e344e5eaa74e40ac47404415a5350, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiMarker: {fileID: 0}
+  mainCamera: {fileID: 0}
+  target: {fileID: 0}
+--- !u!114 &3299136502363862073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7036597285236709176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac8992dafe41e8546b93857616c25e53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyPrefab: {fileID: 4746858642469833032, guid: 923ee8e1f3088464b9cecdd00a6714e5, type: 3}
 --- !u!1 &7210613704196731201
 GameObject:
   m_ObjectHideFlags: 0
@@ -6788,7 +6840,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isHeavyAttack: 0
-  damageAmount: 40
+  damageAmount: 10
   targetLayers:
     serializedVersion: 2
     m_Bits: 64

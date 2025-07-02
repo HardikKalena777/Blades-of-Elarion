@@ -22,6 +22,9 @@ public class EnemyAI : MonoBehaviour
     [Header("Attack Settings")]
     [SerializeField] private float attackCooldown = 2f;
 
+    public AudioClip[] FootstepAudioClips;
+    [Range(0, 1)] public float FootstepAudioVolume = 0.5f;
+
     private Transform player;
     private NavMeshAgent agent;
     private Animator animator;
@@ -85,14 +88,17 @@ public class EnemyAI : MonoBehaviour
         if (level == 1)
         {
             health.maxHealth = Random.Range(50, 80);
+            health.currentHealth = health.maxHealth; 
         }
         if (level == 2)
         {
             health.maxHealth = Random.Range(90, 110);
+            health.currentHealth = health.maxHealth;
         }
         if (level == 3)
         {
             health.maxHealth = Random.Range(120, 150);
+            health.currentHealth = health.maxHealth;
         }
     }
 
@@ -223,6 +229,18 @@ public class EnemyAI : MonoBehaviour
     public void EndDealingDamage()
     {
         GetComponentInChildren<WeaponDamageDealer>().EndDealingDamage();
+    }
+
+    private void OnFootstep(AnimationEvent animationEvent)
+    {
+        if (animationEvent.animatorClipInfo.weight > 0.5f)
+        {
+            if (FootstepAudioClips.Length > 0)
+            {
+                var index = Random.Range(0, FootstepAudioClips.Length);
+                AudioSource.PlayClipAtPoint(FootstepAudioClips[index], transform.position, FootstepAudioVolume);
+            }
+        }
     }
 
 }

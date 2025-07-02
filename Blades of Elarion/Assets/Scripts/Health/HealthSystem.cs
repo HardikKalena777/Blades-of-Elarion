@@ -19,16 +19,17 @@ public class HealthSystem : MonoBehaviour
     public int maxHealth;
     Animator animator;
 
-    private Vignette vignette; 
+    private Vignette vignette;
+    private CombatSystem playerCombat;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        playerCombat = GetComponent<CombatSystem>();
     }
 
     private void Start()
     {
-        currentHealth = maxHealth;
 
         if (volume != null && volume.profile.TryGet(out Vignette vignetteComponent))
         {
@@ -41,7 +42,7 @@ public class HealthSystem : MonoBehaviour
         currentHealth -= damage;
 
         UpdateHealthUI(currentHealth, healthBar); 
-        if(!isBoss)
+        if(!isBoss || !playerCombat.isAttacking)
         {
             animator.SetTrigger("Hit");   
         }

@@ -4672,7 +4672,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 500
-  m_StoppingDistance: 2
+  m_StoppingDistance: 5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -4692,10 +4692,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7101026eb788bc2428d41f44130cc74f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: 0
+  level: 3
   levelText: {fileID: 4304738052934115613}
   followRange: 20
-  attackRange: 1.5
+  attackRange: 5
   roamRadius: 15
   roamInterval: 3
   roamCooldown: 0
@@ -4722,7 +4722,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   volume: {fileID: 0}
-  maxHealth: 50
+  maxHealth: 500
 --- !u!1 &4808773997583149512
 GameObject:
   m_ObjectHideFlags: 0

@@ -42,7 +42,7 @@ public class CombatSystem : MonoBehaviour
         {
             ResetCombo();
         }
-        HandleUI();
+        HandleComboUI();
     }
 
     public void HandleAttackInput()
@@ -126,7 +126,7 @@ public class CombatSystem : MonoBehaviour
             comboText.text = string.Empty;
     }
 
-    private void HandleUI()
+    private void HandleComboUI()
     {
         if(isAttacking)
         {
